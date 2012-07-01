@@ -1,20 +1,14 @@
 from django.contrib import admin
 
-from announcements.models import Announcement
-from announcements.forms import AnnouncementAdminForm
+from announcements.models import Announcement, Dismissal
 
 
 class AnnouncementAdmin(admin.ModelAdmin):
     list_display = ("title", "creator", "creation_date", "members_only")
     list_filter = ("members_only",)
-    form = AnnouncementAdminForm
     fieldsets = [
         (None, {
-            "fields": ["title", "content", "site_wide", "members_only"],
-        }),
-        
-        ("Manage announcement", {
-            "fields": ["send_now"],
+            "fields": ["title", "content", "site_wide", "members_only", "publish_start", "publish_end", "dismissal_type"],
         }),
     ]
 
@@ -26,3 +20,4 @@ class AnnouncementAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Announcement, AnnouncementAdmin)
+admin.site.register(Dismissal)
