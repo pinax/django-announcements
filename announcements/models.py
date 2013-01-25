@@ -2,15 +2,10 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
-# support custom user models in django 1.5+
-# https://docs.djangoproject.com/en/1.5/topics/auth/customizing/#substituting-a-custom-user-model
-try:
-    from django.contrib.auth import get_user_model
-except ImportError:
-    from django.contrib.auth.models import User
-else:
-    User = get_user_model()
+AUTH_MODEL_STRING = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
+
 
 class Announcement(models.Model):
     """
@@ -28,7 +23,7 @@ class Announcement(models.Model):
     
     title = models.CharField(_("title"), max_length=50)
     content = models.TextField(_("content"))
-    creator = models.ForeignKey(User, verbose_name=_("creator"))
+    creator = models.ForeignKey(AUTH_MODEL_STRING, verbose_name=_("creator"))
     creation_date = models.DateTimeField(_("creation_date"), default=timezone.now)
     site_wide = models.BooleanField(_("site wide"), default=False)
     members_only = models.BooleanField(_("members only"), default=False)
@@ -52,6 +47,6 @@ class Announcement(models.Model):
 
 
 class Dismissal(models.Model):
-    user = models.ForeignKey(User, related_name="announcement_dismissals")
+    user = models.ForeignKey(AUTH_MODEL_STRING, related_name="announcement_dismissals")
     announcement = models.ForeignKey(Announcement, related_name="dismissals")
     dismissed_at = models.DateTimeField(default=timezone.now)
