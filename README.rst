@@ -25,7 +25,7 @@ only viewed once. A session variable will hold which announcements an user has
 viewed and exclude that from their display. announcements supports two
 different types of filtering of announcements:
 
- * site-wide (this can be presented to anonymous users)
- * non site-wide (these can be used a strictly a mailing if so desired)
- * members only (announcements are filtered based on the value of
+* site-wide (this can be presented to anonymous users)
+* non site-wide (these can be used a strictly a mailing if so desired)
+* members only (announcements are filtered based on the value of
    ``request.user``)
