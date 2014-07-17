@@ -1,3 +1,22 @@
+django-announcements
+--------------------
+
+.. image:: https://img.shields.io/travis/pinax/pinax-wiki.svg
+    :target: https://travis-ci.org/pinax/pinax-wiki
+
+.. image:: https://img.shields.io/coveralls/pinax/pinax-wiki.svg
+    :target: https://coveralls.io/r/pinax/pinax-wiki
+
+.. image:: https://img.shields.io/pypi/dm/pinax-wiki.svg
+    :target:  https://pypi.python.org/pypi/pinax-wiki/
+
+.. image:: https://img.shields.io/pypi/v/pinax-wiki.svg
+    :target:  https://pypi.python.org/pypi/pinax-wiki/
+
+.. image:: https://img.shields.io/badge/license-MIT-blue.svg
+    :target:  https://pypi.python.org/pypi/pinax-wiki/
+
+
 Some sites need the ability to broadcast an announcement to all of their
 users. django-announcements was created precisely for this reason. How you
 present the announcement is up to you as the site-developer. When working with
