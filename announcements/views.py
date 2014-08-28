@@ -21,9 +21,9 @@ from announcements.models import Announcement
 def dismiss(request, pk):
     announcement = get_object_or_404(Announcement, pk=pk)
     if announcement.dismissal_type == Announcement.DISMISSAL_SESSION:
-        excluded = request.session.get("excluded_announcements", set())
-        excluded.add(announcement.pk)
-        request.session["excluded_announcements"] = excluded
+        excluded = request.session.get("excluded_announcements", list())
+        excluded.append(announcement.pk)
+        request.session["excluded_announcements"] = list(set(excluded))
         status = 200
     elif announcement.dismissal_type == Announcement.DISMISSAL_PERMANENT and \
          request.user.is_authenticated():
