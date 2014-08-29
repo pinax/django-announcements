@@ -1,20 +1,20 @@
 django-announcements
 --------------------
 
-.. image:: https://img.shields.io/travis/pinax/pinax-wiki.svg
-    :target: https://travis-ci.org/pinax/pinax-wiki
+.. image:: https://img.shields.io/travis/pinax/django-announcements.svg
+    :target: https://travis-ci.org/pinax/django-announcements
 
-.. image:: https://img.shields.io/coveralls/pinax/pinax-wiki.svg
-    :target: https://coveralls.io/r/pinax/pinax-wiki
+.. image:: https://img.shields.io/coveralls/pinax/django-announcements.svg
+    :target: https://coveralls.io/r/pinax/django-announcements
 
-.. image:: https://img.shields.io/pypi/dm/pinax-wiki.svg
-    :target:  https://pypi.python.org/pypi/pinax-wiki/
+.. image:: https://img.shields.io/pypi/dm/django-announcements.svg
+    :target:  https://pypi.python.org/pypi/django-announcements/
 
-.. image:: https://img.shields.io/pypi/v/pinax-wiki.svg
-    :target:  https://pypi.python.org/pypi/pinax-wiki/
+.. image:: https://img.shields.io/pypi/v/django-announcements.svg
+    :target:  https://pypi.python.org/pypi/django-announcements/
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
-    :target:  https://pypi.python.org/pypi/pinax-wiki/
+    :target:  https://pypi.python.org/pypi/django-announcements/
 
 
 Some sites need the ability to broadcast an announcement to all of their

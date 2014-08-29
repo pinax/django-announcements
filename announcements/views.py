@@ -21,9 +21,11 @@ from announcements.models import Announcement
 def dismiss(request, pk):
     announcement = get_object_or_404(Announcement, pk=pk)
     if announcement.dismissal_type == Announcement.DISMISSAL_SESSION:
-        excluded = request.session.get("excluded_announcements", set())
+        # get list from session and type it to set()
+        excluded = set(request.session.get("excluded_announcements", []))
         excluded.add(announcement.pk)
-        request.session["excluded_announcements"] = excluded
+        # force to list to avoid TypeError on set() json serialization
+        request.session["excluded_announcements"] = list(excluded)
         status = 200
     elif announcement.dismissal_type == Announcement.DISMISSAL_PERMANENT and \
          request.user.is_authenticated():
@@ -42,7 +44,7 @@ def detail(request, pk):
 
 
 class ProtectedView(View):
-    
+
     @method_decorator(permission_required("announcements.can_manage"))
     def dispatch(self, *args, **kwargs):
         return super(ProtectedView, self).dispatch(*args, **kwargs)
@@ -51,7 +53,7 @@ class ProtectedView(View):
 class CreateAnnouncementView(ProtectedView, CreateView):
     model = Announcement
     form_class = AnnouncementForm
-    
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.creator = self.request.user
@@ -62,7 +64,7 @@ class CreateAnnouncementView(ProtectedView, CreateView):
             request=self.request
         )
         return super(CreateAnnouncementView, self).form_valid(form)
-    
+
     def get_success_url(self):
         return reverse("announcements_list")
 
@@ -70,7 +72,7 @@ class CreateAnnouncementView(ProtectedView, CreateView):
 class UpdateAnnouncementView(ProtectedView, UpdateView):
     model = Announcement
     form_class = AnnouncementForm
-    
+
     def form_valid(self, form):
         response = super(UpdateAnnouncementView, self).form_valid(form)
         signals.announcement_updated.send(
@@ -79,14 +81,14 @@ class UpdateAnnouncementView(ProtectedView, UpdateView):
             request=self.request
         )
         return response
-    
+
     def get_success_url(self):
         return reverse("announcements_list")
 
 
 class DeleteAnnouncementView(ProtectedView, DeleteView):
     model = Announcement
-    
+
     def form_valid(self, form):
         response = super(DeleteAnnouncementView, self).form_valid(form)
         signals.announcement_deleted.send(
@@ -95,7 +97,7 @@ class DeleteAnnouncementView(ProtectedView, DeleteView):
             request=self.request
         )
         return response
-    
+
     def get_success_url(self):
         return reverse("announcements_list")
 
