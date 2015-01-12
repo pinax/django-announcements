@@ -9,9 +9,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-
 from django.contrib.auth.decorators import permission_required
-
 from announcements import signals
 from announcements.forms import AnnouncementForm
 from announcements.models import Announcement
@@ -28,7 +26,7 @@ def dismiss(request, pk):
         request.session["excluded_announcements"] = list(excluded)
         status = 200
     elif announcement.dismissal_type == Announcement.DISMISSAL_PERMANENT and \
-         request.user.is_authenticated():
+            request.user.is_authenticated():
         announcement.dismissals.create(user=request.user)
         status = 200
     else:
@@ -44,7 +42,6 @@ def detail(request, pk):
 
 
 class ProtectedView(View):
-
     @method_decorator(permission_required("announcements.can_manage"))
     def dispatch(self, *args, **kwargs):
         return super(ProtectedView, self).dispatch(*args, **kwargs)
