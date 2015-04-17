@@ -31,7 +31,7 @@ def dismiss(request, pk):
         status = 200
     else:
         status = 409
-    return HttpResponse(json.dumps({}), status=status, mimetype="application/json")
+    return HttpResponse(json.dumps({}), status=status, content_type="application/json")
 
 
 def detail(request, pk):
