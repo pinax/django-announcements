@@ -14,6 +14,13 @@ Installation
         "announcements",
     )
 
+* For Django > 1.7: Add migrations module for this package to your ``MIGRATION_MODULES`` setting::
+
+    MIGRATION_MODULES = {
+	# ...
+	'announcements': 'announcements.django_migrations'
+    }
+
 * Finally::
 
     ...
