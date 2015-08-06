@@ -1,6 +1,9 @@
 django-announcements
 --------------------
 
+.. image:: http://slack.pinaxproject.com/badge.svg
+   :target: http://slack.pinaxproject.com/
+
 .. image:: https://img.shields.io/travis/pinax/django-announcements.svg
     :target: https://travis-ci.org/pinax/django-announcements
 
