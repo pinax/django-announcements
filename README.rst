@@ -51,7 +51,7 @@ different types of filtering of announcements:
 Documentation
 ----------------
 
-The Pinax documentation is available at http://pinaxproject.com/pinax/.
+The django-announcements documentation can be found at https://django-announcements.readthedocs.org/en/latest/. The Pinax documentation is available at http://pinaxproject.com/pinax/. If you would like to help us improve our documentation or write more documentation, please join our Pinax Project Slack channel and let us know!
 
 
 Code of Conduct
