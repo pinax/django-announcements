@@ -1,17 +1,14 @@
-.. _usage:
-
-Usage
-=====
+# Usage
 
 Displaying announcements is done via a template tag that fetches the
 announcements::
 
-    {% load announcements_tags %}
-    
+    {% load pinax_announcements_tags %}
+
     <h3>Announcements</h3>
-    
+
     {% announcements as announcements_list %}
-    
+
     {% if announcements_list %}
         <div class="announcements">
             {% for announcement in announcements_list %}
@@ -36,4 +33,4 @@ the supplied detail view::
 
 
 The `announcement.dismiss_url` is intended to be called via an AJAX POST
-and will dismiss the announcement based on it's dismissal properties::
+and will dismiss the announcement based on it's dismissal properties

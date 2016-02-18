@@ -1,21 +1,15 @@
 from django.contrib import admin
 
-from announcements.models import Announcement, Dismissal
+from pinax.announcements.models import Announcement, Dismissal
 
 # import our user model and determine the field we will use to search by user
-# support custom user models & username fields in django 1.5+
-try:
-    from django.contrib.auth import get_user_model
-except ImportError:
-    from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
-    username_search = "user__username"
+User = get_user_model()
+if hasattr(User, "USERNAME_FIELD"):
+    username_search = "user__%s" % User.USERNAME_FIELD
 else:
-    User = get_user_model()
-    if hasattr(User, "USERNAME_FIELD"):
-        username_search = "user__%s" % User.USERNAME_FIELD
-    else:
-        username_search = "user__username"
+    username_search = "user__username"
 
 
 class AnnouncementAdmin(admin.ModelAdmin):
