@@ -1,5 +1,5 @@
 include AUTHORS
 include LICENSE
-include README.md
-recursive-include docs *
-recursive-include announcements/templates/ *
+include README.rst
+recursive-include pinax/announcements/templates/pinax *.xml
+recursive-include pinax/announcements/locale *

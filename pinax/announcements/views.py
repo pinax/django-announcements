@@ -10,9 +10,9 @@ from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.contrib.auth.decorators import permission_required
-from announcements import signals
-from announcements.forms import AnnouncementForm
-from announcements.models import Announcement
+from pinax.announcements import signals
+from pinax.announcements.forms import AnnouncementForm
+from pinax.announcements.models import Announcement
 
 
 @require_POST
@@ -36,7 +36,7 @@ def dismiss(request, pk):
 
 def detail(request, pk):
     announcement = get_object_or_404(Announcement, pk=pk)
-    return TemplateResponse(request, "announcements/detail.html", {
+    return TemplateResponse(request, "pinax/announcements/detail.html", {
         "announcement": announcement
     })
 
@@ -48,6 +48,7 @@ class ProtectedView(View):
 
 
 class CreateAnnouncementView(ProtectedView, CreateView):
+    template_name = "pinax/announcements/announcement_form.html"
     model = Announcement
     form_class = AnnouncementForm
 
@@ -67,6 +68,7 @@ class CreateAnnouncementView(ProtectedView, CreateView):
 
 
 class UpdateAnnouncementView(ProtectedView, UpdateView):
+    template_name = "pinax/announcements/announcement_form.html"
     model = Announcement
     form_class = AnnouncementForm
 
@@ -84,6 +86,7 @@ class UpdateAnnouncementView(ProtectedView, UpdateView):
 
 
 class DeleteAnnouncementView(ProtectedView, DeleteView):
+    template_name = "pinax/announcements/announcement_confirm_delete.html"
     model = Announcement
 
     def form_valid(self, form):
@@ -100,6 +103,7 @@ class DeleteAnnouncementView(ProtectedView, DeleteView):
 
 
 class AnnouncementListView(ProtectedView, ListView):
+    template_name = "pinax/announcements/announcement_list.html"
     model = Announcement
     queryset = Announcement.objects.all().order_by("-creation_date")
     paginate_by = 50

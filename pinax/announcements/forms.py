@@ -1,6 +1,6 @@
 from django import forms
 
-from announcements.models import Announcement
+from pinax.announcements.models import Announcement
 
 
 class AnnouncementForm(forms.ModelForm):

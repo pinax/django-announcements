@@ -2,7 +2,7 @@ from django import template
 from django.db.models import Q
 from django.utils import timezone
 
-from announcements.models import Announcement
+from pinax.announcements.models import Announcement
 
 
 register = template.Library()
