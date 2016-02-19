@@ -4,6 +4,7 @@ from announcements.views import detail, dismiss
 from announcements.views import CreateAnnouncementView, UpdateAnnouncementView
 from announcements.views import DeleteAnnouncementView, AnnouncementListView
 
+
 urlpatterns = [
     url(r"^$", AnnouncementListView.as_view(), name="announcements_list"),
     url(r"^announcement/create/$", CreateAnnouncementView.as_view(), name="announcements_create"),
