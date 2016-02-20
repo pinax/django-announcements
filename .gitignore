@@ -2,12 +2,10 @@ build
 dist
 .coverage
 .tox
+.idea
 MANIFEST
 *.pyc
 *.egg-info
 *.egg
 docs/_build/
 htmlcov/
-site/
-.eggs/
-.idea
