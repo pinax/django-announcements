@@ -4,20 +4,20 @@ Django Announcements
 .. image:: http://slack.pinaxproject.com/badge.svg
    :target: http://slack.pinaxproject.com/
 
-.. image:: https://img.shields.io/travis/pinax/django-announcements.svg
-    :target: https://travis-ci.org/pinax/django-announcements
+.. image:: https://img.shields.io/travis/pinax/pinax-announcements.svg
+    :target: https://travis-ci.org/pinax/pinax-announcements
 
-.. image:: https://img.shields.io/coveralls/pinax/django-announcements.svg
-    :target: https://coveralls.io/r/pinax/django-announcements
+.. image:: https://img.shields.io/coveralls/pinax/pinax-announcements.svg
+    :target: https://coveralls.io/r/pinax/pinax-announcements
 
-.. image:: https://img.shields.io/pypi/dm/django-announcements.svg
-    :target:  https://pypi.python.org/pypi/django-announcements/
+.. image:: https://img.shields.io/pypi/dm/pinax-announcements.svg
+    :target:  https://pypi.python.org/pypi/pinax-announcements/
 
-.. image:: https://img.shields.io/pypi/v/django-announcements.svg
-    :target:  https://pypi.python.org/pypi/django-announcements/
+.. image:: https://img.shields.io/pypi/v/pinax-announcements.svg
+    :target:  https://pypi.python.org/pypi/pinax-announcements/
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
-    :target:  https://pypi.python.org/pypi/django-announcements/
+    :target:  https://pypi.python.org/pypi/pinax-announcements/
     
 
 Pinax
