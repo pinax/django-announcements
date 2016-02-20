@@ -1,4 +1,4 @@
-# django-announcements
+# pinax-announcements
 
 Originally named `django-announcements`, the announcements app is now known as `pinax-announcements`.
 
@@ -23,7 +23,7 @@ Install the development version:
 
     pip install pinax-announcements
 
-Add `pinax-announcements` to your `INSTALLED_APPS` setting:
+Add `pinax.announcements` to your `INSTALLED_APPS` setting:
 
     INSTALLED_APPS = (
         # ...
