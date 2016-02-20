@@ -25,4 +25,4 @@ script:
 after_success:
   - coveralls
 notifications:
-  slack: pinax:wbOqQNSlSVlD7bnnph9wdLpI
+  slack: pinax:APzbv4UOoGNc179YUOEdK5hn
