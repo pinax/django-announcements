@@ -15,6 +15,7 @@ DEFAULT_SETTINGS = dict(
         "pinax.announcements",
         "pinax.announcements.tests"
     ],
+    MIDDLEWARE_CLASSES=[],
     DATABASES={
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -31,9 +32,7 @@ def runtests(*test_args):
     if not settings.configured:
         settings.configure(**DEFAULT_SETTINGS)
 
-    # Compatibility with Django 1.7's stricter initialization
-    if hasattr(django, "setup"):
-        django.setup()
+    django.setup()
 
     parent = os.path.dirname(os.path.abspath(__file__))
     sys.path.insert(0, parent)
