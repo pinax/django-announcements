@@ -1,44 +1,45 @@
-import json
-
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
-from django.template.response import TemplateResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.utils.decorators import method_decorator
-from django.views.decorators.http import require_POST
-from django.views.generic import View
+from django.views.generic import View, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-from django.contrib.auth.decorators import permission_required
+
 from pinax.announcements import signals
 from pinax.announcements.forms import AnnouncementForm
 from pinax.announcements.models import Announcement
 
 
-@require_POST
-def dismiss(request, pk):
-    announcement = get_object_or_404(Announcement, pk=pk)
-    if announcement.dismissal_type == Announcement.DISMISSAL_SESSION:
-        # get list from session and type it to set()
-        excluded = set(request.session.get("excluded_announcements", []))
-        excluded.add(announcement.pk)
-        # force to list to avoid TypeError on set() json serialization
-        request.session["excluded_announcements"] = list(excluded)
-        status = 200
-    elif announcement.dismissal_type == Announcement.DISMISSAL_PERMANENT and \
-            request.user.is_authenticated():
-        announcement.dismissals.create(user=request.user)
-        status = 200
-    else:
-        status = 409
-    return HttpResponse(json.dumps({}), status=status, content_type="application/json")
+class AnnouncementDetailView(DetailView):
+    template_name = "pinax/announcements/detail.html"
+    model = Announcement
+    context_object_name = 'announcement'
 
 
-def detail(request, pk):
-    announcement = get_object_or_404(Announcement, pk=pk)
-    return TemplateResponse(request, "pinax/announcements/detail.html", {
-        "announcement": announcement
-    })
+class AnnouncementDismissView(AnnouncementDetailView):
+
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.dismissal_type == Announcement.DISMISSAL_SESSION:
+            # get list from session and type it to set()
+            excluded = set(request.session.get("excluded_announcements", []))
+            excluded.add(self.object.pk)
+            # force to list to avoid TypeError on set() json serialization
+            request.session["excluded_announcements"] = list(excluded)
+            status = 200
+        elif self.object.dismissal_type == Announcement.DISMISSAL_PERMANENT and \
+                request.user.is_authenticated():
+            self.object.dismissals.create(user=request.user)
+            status = 200
+        else:
+            status = 409
+            if request.is_ajax():
+                return JsonResponse({}, status=status)
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
 
 class ProtectedView(View):
