@@ -10,36 +10,29 @@ def read(*parts):
         return fp.read()
 
 
-NAME = "pinax-announcements"
-DESCRIPTION = "a Django announcements app"
-AUTHOR = "Pinax Team"
-AUTHOR_EMAIL = "team@pinaxproject.com"
-URL = "https://github.com/pinax/pinax-announcements"
-
-
 setup(
-    name=NAME,
-    version="1.2.0",
-    description=DESCRIPTION,
+    author="Pinax Team",
+    author_email="team@pinaxproject.com",
+    description="a Django announcements app",
+    name="pinax-announcements",
     long_description=read("README.rst"),
-    url=URL,
+    version="0.1",
+    url="http://github.com/pinax/pinax-announcements/",
     license="MIT",
     packages=find_packages(),
     package_data={
-        "pinax.announcements": [
-            "templates/pinax/announcements/*.xml",
-        ]
+        "announcements": []
     },
-
     test_suite="runtests.runtests",
+    tests_require=[
+    ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
+        "Framework :: Django",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Programming Language :: Python",
-        "Framework :: Django",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
