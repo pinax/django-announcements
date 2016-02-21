@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.http import JsonResponse, HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.generic import View, DetailView
+from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 
@@ -17,10 +18,8 @@ class AnnouncementDetailView(DetailView):
     context_object_name = 'announcement'
 
 
-class AnnouncementDismissView(AnnouncementDetailView):
-
-    def get(self, request, *args, **kwargs):
-        pass
+class AnnouncementDismissView(SingleObjectMixin, View):
+    model = Announcement
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
