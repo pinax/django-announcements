@@ -1,4 +1,4 @@
-Django Announcements
+Pinax Announcements
 --------------------
 
 .. image:: http://slack.pinaxproject.com/badge.svg
@@ -29,13 +29,13 @@ This collection can be found at http://pinaxproject.com.
 This app was developed as part of the Pinax ecosystem but is just a Django app and can be used independently of other Pinax apps.
 
 
-django-announcements
+pinax-announcements
 ---------------------
 
-``django-announcements`` is a site-wide announcement reusable app for Django.
+``pinax-announcements`` is a site-wide announcement reusable app for Django.
 
 Some sites need the ability to broadcast an announcement to all of their
-users. django-announcements was created precisely for this reason. How you
+users. pinax-announcements was created precisely for this reason. How you
 present the announcement is up to you as the site-developer. When working with
 announcements that are presented on the website one feature is that they are
 only viewed once. A session variable will hold which announcements an user has
