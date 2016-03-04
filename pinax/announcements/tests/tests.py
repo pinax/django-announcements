@@ -1,16 +1,11 @@
-import os
-
-from django.conf import settings
-from django.contrib.auth.models import Permission
-from django.contrib.contenttypes.models import ContentType
 from django.template import (
-    Context,
+##    Context,
     Template,
 )
 
 from ..models import (
     Announcement,
-    Dismissal,
+##    Dismissal,
 )
 from .test import TestCase
 
@@ -47,7 +42,7 @@ class TestViews(BaseTest):
         # Create user without "can_manage" permission.
         user = self.make_user("user")
         with self.login(user):
-            response = self.get("pinax_announcements:announcement_list")
+            self.get("pinax_announcements:announcement_list")
             self.response_302()
 
     def test_can_manage_list(self):
@@ -55,7 +50,7 @@ class TestViews(BaseTest):
         Ensure Announcement list appears for user with "can_manage" perm.
         """
         with self.login(self.staff):
-            response = self.get("pinax_announcements:announcement_list")
+            self.get("pinax_announcements:announcement_list")
             self.response_200()
             self.assertInContext("object_list")
             self.assertSequenceEqual(
@@ -68,10 +63,7 @@ class TestViews(BaseTest):
         Ensure Announcement appears in detail view context.
         """
         with self.login(self.staff):
-            response = self.get(
-                "pinax_announcements:announcement_detail",
-                pk=self.announcement.pk
-            )
+            self.get("pinax_announcements:announcement_detail", pk=self.announcement.pk)
             self.response_200()
             self.assertInContext("announcement")
             self.assertContext("announcement", self.announcement)
