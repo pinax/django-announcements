@@ -64,7 +64,7 @@ class CreateAnnouncementView(ProtectedView, CreateView):
         return super(CreateAnnouncementView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse("announcements_list")
+        return reverse("pinax_announcements:announcement_list")
 
 
 class UpdateAnnouncementView(ProtectedView, UpdateView):
@@ -82,7 +82,7 @@ class UpdateAnnouncementView(ProtectedView, UpdateView):
         return response
 
     def get_success_url(self):
-        return reverse("announcements_list")
+        return reverse("pinax_announcements:announcement_list")
 
 
 class DeleteAnnouncementView(ProtectedView, DeleteView):
@@ -99,7 +99,7 @@ class DeleteAnnouncementView(ProtectedView, DeleteView):
         return response
 
     def get_success_url(self):
-        return reverse("announcements_list")
+        return reverse("pinax_announcements:announcement_list")
 
 
 class AnnouncementListView(ProtectedView, ListView):
