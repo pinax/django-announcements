@@ -13,7 +13,7 @@ from pinax.announcements.models import Announcement
 
 
 class AnnouncementDetailView(DetailView):
-    template_name = "pinax/announcements/detail.html"
+    template_name = "pinax/announcements/announcement_detail.html"
     model = Announcement
     context_object_name = 'announcement'
 

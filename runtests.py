@@ -14,6 +14,8 @@ DEFAULT_SETTINGS = dict(
         "django.contrib.sites",
         "django.contrib.sessions",
         "account",
+        "pinax_theme_bootstrap",
+        "bootstrapform",
         "pinax.announcements",
         "pinax.announcements.tests"
     ],
@@ -31,9 +33,6 @@ DEFAULT_SETTINGS = dict(
     SITE_ID=1,
     ROOT_URLCONF="pinax.announcements.tests.urls",
     SECRET_KEY="notasecret",
-    TEMPLATE_CONTEXT_PROCESSORS=[
-        "user_messages.context_processors.user_messages",
-    ],
     AUTHENTICATION_BACKENDS=[
         "account.auth_backends.UsernameAuthenticationBackend",
         "pinax.announcements.auth_backends.AnnouncementPermissionsBackend",
@@ -42,6 +41,13 @@ DEFAULT_SETTINGS = dict(
         {
             "BACKEND": "django.template.backends.django.DjangoTemplates",
             "APP_DIRS": True,
+            "OPTIONS": {
+                "context_processors": [
+                    "django.contrib.auth.context_processors.auth",
+                    "account.context_processors.account",
+                    "pinax_theme_bootstrap.context_processors.theme",
+                ]
+            }
         },
     ]
 )
