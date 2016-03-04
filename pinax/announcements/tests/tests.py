@@ -1,12 +1,6 @@
-from django.template import (
-##    Context,
-    Template,
-)
+from django.template import Template
 
-from ..models import (
-    Announcement,
-##    Dismissal,
-)
+from ..models import Announcement
 from .test import TestCase
 
 
