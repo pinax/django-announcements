@@ -2,7 +2,6 @@ from django.conf.urls import url
 
 from pinax.announcements import views
 
-app_name = "pinax_announcements"
 urlpatterns = [
     url(r"^$", views.AnnouncementListView.as_view(),
         name="announcement_list"),
