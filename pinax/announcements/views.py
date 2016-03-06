@@ -89,10 +89,10 @@ class DeleteAnnouncementView(ProtectedView, DeleteView):
     template_name = "pinax/announcements/announcement_confirm_delete.html"
     model = Announcement
 
-    def form_valid(self, form):
-        response = super(DeleteAnnouncementView, self).form_valid(form)
+    def delete(self, request, *args, **kwargs):
+        response = super(DeleteAnnouncementView, self).delete(request, *args, **kwargs)
         signals.announcement_deleted.send(
-            sender=self.object,
+            sender=None,
             announcement=self.object,
             request=self.request
         )
