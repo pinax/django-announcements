@@ -27,9 +27,7 @@ setup(
     tests_require=[
         "django-test-plus>=1.0.11",
         "pinax-theme-bootstrap>=7.4.0",
-        "django-appconf>=1.0.1",
         "mock>=1.3.0",
-        "django-user-accounts>=1.3.1",
     ],
     install_requires=[
         "django-appconf>=1.0.1",
