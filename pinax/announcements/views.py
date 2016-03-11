@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import permission_required
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import JsonResponse, HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.generic import View, DetailView
@@ -47,7 +47,7 @@ class ProtectedView(View):
         return super(ProtectedView, self).dispatch(*args, **kwargs)
 
 
-class CreateAnnouncementView(ProtectedView, CreateView):
+class AnnouncementCreateView(ProtectedView, CreateView):
     template_name = "pinax/announcements/announcement_form.html"
     model = Announcement
     form_class = AnnouncementForm
@@ -61,19 +61,19 @@ class CreateAnnouncementView(ProtectedView, CreateView):
             announcement=self.object,
             request=self.request
         )
-        return super(CreateAnnouncementView, self).form_valid(form)
+        return super(AnnouncementCreateView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse("pinax_announcements:announcement_list")
 
 
-class UpdateAnnouncementView(ProtectedView, UpdateView):
+class AnnouncementUpdateView(ProtectedView, UpdateView):
     template_name = "pinax/announcements/announcement_form.html"
     model = Announcement
     form_class = AnnouncementForm
 
     def form_valid(self, form):
-        response = super(UpdateAnnouncementView, self).form_valid(form)
+        response = super(AnnouncementUpdateView, self).form_valid(form)
         signals.announcement_updated.send(
             sender=self.object,
             announcement=self.object,
@@ -85,21 +85,20 @@ class UpdateAnnouncementView(ProtectedView, UpdateView):
         return reverse("pinax_announcements:announcement_list")
 
 
-class DeleteAnnouncementView(ProtectedView, DeleteView):
+class AnnouncementDeleteView(ProtectedView, DeleteView):
     template_name = "pinax/announcements/announcement_confirm_delete.html"
     model = Announcement
+    success_url = reverse_lazy("pinax_announcements:announcement_list")
 
     def delete(self, request, *args, **kwargs):
-        response = super(DeleteAnnouncementView, self).delete(request, *args, **kwargs)
+        response = super(AnnouncementDeleteView, self).delete(request, *args, **kwargs)
+#        hookset.announcement_deleted_message(self.request, self.object)
         signals.announcement_deleted.send(
             sender=None,
             announcement=self.object,
             request=self.request
         )
         return response
-
-    def get_success_url(self):
-        return reverse("pinax_announcements:announcement_list")
 
 
 class AnnouncementListView(ProtectedView, ListView):

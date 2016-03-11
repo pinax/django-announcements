@@ -22,14 +22,7 @@ class BaseTest(TestCase, TestCaseMixin):
         # Make this user "staff" for "can_manage" permission.
         self.staff.is_staff = True
         self.staff.save()
-
-        self.title_string = "Election Results"
-        self.announcement = Announcement.objects.create(
-            title=self.title_string,
-            content="some results",
-            creator=self.staff
-        )
-        self.announcement.save()
+        self.assertTrue(self.staff.has_perm("announcements.can_manage"))
 
 
 class TestViews(BaseTest):
@@ -41,132 +34,173 @@ class TestViews(BaseTest):
         # Create user without "can_manage" permission.
         user = self.make_user("user")
         with self.login(user):
+
+            self.get("pinax_announcements:announcement_create")
+            self.response_302()
+
             self.get("pinax_announcements:announcement_list")
             self.response_302()
+
+            self.get("pinax_announcements:announcement_delete", pk=1)
+            self.response_302()
+
+            self.get("pinax_announcements:announcement_update", pk=1)
+            self.response_302()
+
+    def test_create(self):
+        """
+        Ensure Announcement is created properly.
+        """
+        title = "More Election Results"
+        post_args = {
+            "title": title,
+            "content": "more results",
+            "site_wide": False,
+            "members_only": False,
+            "dismissal_type": 1,
+            "publish_start": "2016-03-11",
+            "publish_end": "",
+        }
+        with self.login(self.staff):
+            response = self.post(
+                "pinax_announcements:announcement_create",
+                data=post_args,
+                follow=True
+            )
+            self.response_200(response)
+            self.assertTrue(Announcement.objects.filter(title=title))
+
+    def test_detail(self):
+        """
+        Ensure view context contains the expected Announcement.
+        """
+        announcement = Announcement.objects.create(
+            title="Election Results",
+            content="some results",
+            creator=self.staff
+        )
+        announcement.save()
+
+        # User without "can_manage" perm is able to view detail.
+        user = self.make_user("user")
+        with self.login(user):
+            self.get("pinax_announcements:announcement_detail", pk=announcement.pk)
+            self.response_200()
+            self.assertContext("object", announcement)
+
+    def test_update(self):
+        """
+        Ensure Announcement is updated.
+        """
+        announcement = Announcement.objects.create(
+            title="Election Results",
+            content="some results",
+            creator=self.staff
+        )
+        announcement.save()
+
+        new_title = "2016 Election Results"
+        post_args = {
+            "title": new_title,
+            "content": "more results",
+            "site_wide": False,
+            "members_only": False,
+            "dismissal_type": 1,
+            "publish_start": "2016-03-11",
+            "publish_end": "",
+        }
+        with self.login(self.staff):
+            response = self.post(
+                "pinax_announcements:announcement_update",
+                pk=announcement.pk,
+                data=post_args,
+                follow=True
+            )
+            self.response_200(response)
+            self.assertTrue(Announcement.objects.filter(title=new_title))
+
+    def test_dismiss_no(self):
+        """
+        Ensure we don't dismiss Announcement with DISMISSAL_NO.
+        """
+        announcement = Announcement.objects.create(
+            title="Election Results",
+            content="some results",
+            creator=self.staff,
+            dismissal_type=Announcement.DISMISSAL_NO
+        )
+        announcement.save()
+
+        # Create user without "can_manage" permission.
+        user = self.make_user("user")
+        with self.login(user):
+            self.post("pinax_announcements:announcement_dismiss", pk=announcement.pk, follow=True)
+            self.response_200()
+
+    def test_dismiss_session(self):
+        """
+        Ensure we dismiss Announcement from the session.
+        """
+        announcement = Announcement.objects.create(
+            title="Election Results",
+            content="some results",
+            creator=self.staff,
+            dismissal_type=Announcement.DISMISSAL_SESSION
+        )
+        announcement.save()
+
+        # Create user without "can_manage" permission.
+        user = self.make_user("user")
+        with self.login(user):
+            self.post("pinax_announcements:announcement_dismiss", pk=announcement.pk, follow=True)
+            self.response_200()
+
+    def test_dismiss_permanent(self):
+        """
+        Ensure we dismiss Announcement permanently.
+        """
+        announcement = Announcement.objects.create(
+            title="Election Results",
+            content="some results",
+            creator=self.staff,
+            dismissal_type=Announcement.DISMISSAL_PERMANENT
+        )
+        announcement.save()
+
+        # Create user without "can_manage" permission.
+        user = self.make_user("user")
+        with self.login(user):
+            self.post("pinax_announcements:announcement_dismiss", pk=announcement.pk, follow=True)
+            self.response_200()
 
     def test_list(self):
         """
         Ensure Announcement list appears for user with "can_manage" perm.
         """
+        announcement = Announcement.objects.create(
+            title="Election Results",
+            content="some results",
+            creator=self.staff
+        )
+        announcement.save()
+
         with self.login(self.staff):
             self.get("pinax_announcements:announcement_list")
             self.response_200()
-            self.assertInContext("object_list")
-            self.assertSequenceEqual(
-                self.last_response.context["object_list"],
-                [self.announcement]
-            )
-
-    def test_detail_without_can_manage(self):
-        """
-        Ensure Announcement appears in detail view context for user without "can_manage" perm.
-        """
-        user = self.make_user("user")
-        with self.login(user):
-            self.get("pinax_announcements:announcement_detail", pk=self.announcement.pk)
-            self.response_200()
-            self.assertContext("announcement", self.announcement)
-
-    def test_detail(self):
-        """
-        Ensure Announcement appears in detail view context.
-        """
-        with self.login(self.staff):
-            self.get("pinax_announcements:announcement_detail", pk=self.announcement.pk)
-            self.response_200()
-            self.assertContext("announcement", self.announcement)
-
-    def test_create(self):
-        """
-        Create an Announcement
-        """
-        title_string = "Acme Recalls Rocket Sled"
-        post_args = {
-            "title": title_string,
-            "content": "Wile E. Coyote crashed",
-            "dismissal_type": "2",
-            "publish_start": "2016-03-06",
-        }
-
-        def receiver(sender, **kwargs):
-            self.assertTrue("announcement" in kwargs)
-            self.assertTrue('request' in kwargs)
-            received_signals.append(kwargs.get('signal'))
-
-        received_signals = []
-        announcement_created.connect(receiver)
-
-        with self.login(self.staff):
-            self.post("pinax_announcements:announcement_create", data=post_args, follow=True)
-            self.response_200()
-            self.assertTrue(Announcement.objects.get(title=title_string))
-
-            self.assertEqual(len(received_signals), 1)
-            self.assertEqual(received_signals, [announcement_created])
-
-    def test_update(self):
-        """
-        Update existing Announcement
-        """
-        title_string = "Acme Recalls Rocket Sled"
-        post_args = {
-            "title": title_string,
-            "content": "Wile E. Coyote crashed",
-            "dismissal_type": "2",
-            "publish_start": "2016-03-06",
-        }
-
-        def receiver(sender, **kwargs):
-            self.assertTrue("announcement" in kwargs)
-            self.assertTrue('request' in kwargs)
-            received_signals.append(kwargs.get('signal'))
-
-        received_signals = []
-        announcement_updated.connect(receiver)
-
-        with self.login(self.staff):
-            self.post(
-                "pinax_announcements:announcement_update",
-                pk=self.announcement.pk,
-                data=post_args,
-                follow=True
-            )
-            self.response_200()
-            announcement = Announcement.objects.get(title=title_string)
-            self.assertEqual(announcement.pk, self.announcement.pk)
-            self.assertFalse(Announcement.objects.filter(title=self.title_string))
-
-            self.assertEqual(len(received_signals), 1)
-            self.assertEqual(received_signals, [announcement_updated])
+            self.assertSequenceEqual(self.last_response.context["object_list"], [announcement])
 
     def test_delete(self):
         """
-        Delete an Announcement
+        Ensure Announcement is deleted.
         """
-        self.assertTrue(Announcement.objects.filter(pk=self.announcement.pk))
-
-        def receiver(sender, **kwargs):
-            self.assertTrue("announcement" in kwargs)
-            self.assertTrue('request' in kwargs)
-            received_signals.append(kwargs.get('signal'))
-
-        received_signals = []
-        announcement_deleted.connect(receiver)
+        announcement = Announcement.objects.create(
+            title="Election Results",
+            content="some results",
+            creator=self.staff
+        )
+        announcement.save()
 
         with self.login(self.staff):
-            self.post(
-                "pinax_announcements:announcement_delete",
-                pk=self.announcement.pk,
-                follow=True
-            )
+            self.post("pinax_announcements:announcement_delete", pk=announcement.pk, follow=True)
             self.response_200()
-            self.assertFalse(Announcement.objects.filter(pk=self.announcement.pk))
-
-            self.assertEqual(len(received_signals), 1)
-            self.assertEqual(received_signals, [announcement_deleted])
-
-    def test_dismiss(self):
-        """
-        Dismiss an Announcement
-        """
-        pass
+            self.assertFalse(Announcement.objects.filter(pk=announcement.pk))
