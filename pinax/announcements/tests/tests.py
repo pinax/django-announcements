@@ -166,7 +166,7 @@ class TestViews(BaseTest):
         # Create user without "can_manage" permission.
         user = self.make_user("user")
         with self.login(user):
-            response = self.post("pinax_announcements:announcement_dismiss", pk=announcement.pk)
+            self.post("pinax_announcements:announcement_dismiss", pk=announcement.pk)
             self.response_302()
             self.assertFalse(Dismissal.objects.filter(announcement=announcement))
             session = self.get_session_data()
