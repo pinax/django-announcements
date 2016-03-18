@@ -235,7 +235,7 @@ class TestViews(BaseTest):
         # Create user without "can_manage" permission.
         user = self.make_user("user")
         with self.login(user):
-            response = self.post(
+            self.post(
                 "pinax_announcements:announcement_dismiss",
                 pk=announcement.pk,
                 extra=dict(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
