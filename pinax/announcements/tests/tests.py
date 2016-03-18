@@ -195,6 +195,83 @@ class TestViews(BaseTest):
             session = self.get_session_data()
             self.assertFalse(session.get("excluded_announcements", False))
 
+    def test_ajax_dismiss_no(self):
+        """
+        Ensure we don't dismiss Announcement with DISMISSAL_NO via AJAX.
+        """
+        announcement = Announcement.objects.create(
+            title="Election Results",
+            content="some results",
+            creator=self.staff,
+            dismissal_type=Announcement.DISMISSAL_NO
+        )
+        announcement.save()
+
+        # Create user without "can_manage" permission.
+        user = self.make_user("user")
+        with self.login(user):
+            response = self.post(
+                "pinax_announcements:announcement_dismiss",
+                pk=announcement.pk,
+                extra=dict(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+            )
+            self.assertEqual(response.status_code, 409)
+            self.assertFalse(Dismissal.objects.filter(announcement=announcement))
+            session = self.get_session_data()
+            self.assertFalse(session.get("excluded_announcements", False))
+
+    def test_ajax_dismiss_session(self):
+        """
+        Ensure we dismiss Announcement from the session via AJAX.
+        """
+        announcement = Announcement.objects.create(
+            title="Election Results",
+            content="some results",
+            creator=self.staff,
+            dismissal_type=Announcement.DISMISSAL_SESSION
+        )
+        announcement.save()
+
+        # Create user without "can_manage" permission.
+        user = self.make_user("user")
+        with self.login(user):
+            response = self.post(
+                "pinax_announcements:announcement_dismiss",
+                pk=announcement.pk,
+                extra=dict(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+            )
+            self.response_200()
+            self.assertFalse(Dismissal.objects.filter(announcement=announcement))
+            session = self.get_session_data()
+            excluded = session.get("excluded_announcements", False)
+            self.assertTrue(excluded)
+            self.assertEqual(excluded, [announcement.pk])
+
+    def test_ajax_dismiss_permanent(self):
+        """
+        Ensure we dismiss Announcement permanently via AJAX.
+        """
+        announcement = Announcement.objects.create(
+            title="Election Results",
+            content="some results",
+            creator=self.staff,
+            dismissal_type=Announcement.DISMISSAL_PERMANENT
+        )
+        announcement.save()
+
+        # Create user without "can_manage" permission.
+        user = self.make_user("user")
+        with self.login(user):
+            self.post(
+                "pinax_announcements:announcement_dismiss",
+                pk=announcement.pk,
+                extra=dict(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+            )
+            self.response_200()
+            self.assertTrue(Dismissal.objects.filter(announcement=announcement))
+            session = self.get_session_data()
+            self.assertFalse(session.get("excluded_announcements", False))
+
     def test_list(self):
         """
         Ensure Announcement list appears for user with "can_manage" perm.

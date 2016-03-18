@@ -36,8 +36,9 @@ class AnnouncementDismissView(SingleObjectMixin, View):
             status = 200
         else:
             status = 409
-            if request.is_ajax():
-                return JsonResponse({}, status=status)
+
+        if request.is_ajax():
+            return JsonResponse({}, status=status)
         return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
 
