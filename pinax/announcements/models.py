@@ -30,11 +30,11 @@ class Announcement(models.Model):
     publish_end = models.DateTimeField(_("publish_end"), blank=True, null=True)
 
     def get_absolute_url(self):
-        return reverse("announcements_detail", args=[self.pk])
+        return reverse("pinax_announcements:announcement_detail", args=[self.pk])
 
     def dismiss_url(self):
         if self.dismissal_type != Announcement.DISMISSAL_NO:
-            return reverse("announcements_dismiss", args=[self.pk])
+            return reverse("pinax_announcements:announcement_dismiss", args=[self.pk])
 
     def __unicode__(self):
         return self.title
