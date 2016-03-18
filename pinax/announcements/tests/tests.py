@@ -1,11 +1,18 @@
+from django.contrib.sessions.models import Session
 from django.template import Template
 
-from ..models import Announcement
+from ..models import (
+    Announcement,
+    Dismissal,
+)
+"""
+# Check for signal emitted after test actions!
 from ..signals import (
     announcement_created,
     announcement_deleted,
     announcement_updated,
 )
+"""
 from .test import TestCase
 
 
@@ -119,6 +126,10 @@ class TestViews(BaseTest):
             self.response_200(response)
             self.assertTrue(Announcement.objects.filter(title=new_title))
 
+    def get_session_data(self):
+        session = Session.objects.get()
+        return session.get_decoded()
+
     def test_dismiss_no(self):
         """
         Ensure we don't dismiss Announcement with DISMISSAL_NO.
@@ -134,8 +145,11 @@ class TestViews(BaseTest):
         # Create user without "can_manage" permission.
         user = self.make_user("user")
         with self.login(user):
-            self.post("pinax_announcements:announcement_dismiss", pk=announcement.pk, follow=True)
-            self.response_200()
+            self.post("pinax_announcements:announcement_dismiss", pk=announcement.pk)
+            self.response_302()
+            self.assertFalse(Dismissal.objects.filter(announcement=announcement))
+            session = self.get_session_data()
+            self.assertFalse(session.get("excluded_announcements", False))
 
     def test_dismiss_session(self):
         """
@@ -152,8 +166,13 @@ class TestViews(BaseTest):
         # Create user without "can_manage" permission.
         user = self.make_user("user")
         with self.login(user):
-            self.post("pinax_announcements:announcement_dismiss", pk=announcement.pk, follow=True)
-            self.response_200()
+            response = self.post("pinax_announcements:announcement_dismiss", pk=announcement.pk)
+            self.response_302()
+            self.assertFalse(Dismissal.objects.filter(announcement=announcement))
+            session = self.get_session_data()
+            excluded = session.get("excluded_announcements", False)
+            self.assertTrue(excluded)
+            self.assertEqual(excluded, [announcement.pk])
 
     def test_dismiss_permanent(self):
         """
@@ -170,8 +189,11 @@ class TestViews(BaseTest):
         # Create user without "can_manage" permission.
         user = self.make_user("user")
         with self.login(user):
-            self.post("pinax_announcements:announcement_dismiss", pk=announcement.pk, follow=True)
-            self.response_200()
+            self.post("pinax_announcements:announcement_dismiss", pk=announcement.pk)
+            self.response_302()
+            self.assertTrue(Dismissal.objects.filter(announcement=announcement))
+            session = self.get_session_data()
+            self.assertFalse(session.get("excluded_announcements", False))
 
     def test_list(self):
         """
