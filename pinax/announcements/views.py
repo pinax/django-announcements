@@ -15,7 +15,7 @@ from pinax.announcements.models import Announcement
 class AnnouncementDetailView(DetailView):
     template_name = "pinax/announcements/announcement_detail.html"
     model = Announcement
-    context_object_name = 'announcement'
+    context_object_name = "announcement"
 
 
 class AnnouncementDismissView(SingleObjectMixin, View):
