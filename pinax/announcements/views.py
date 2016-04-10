@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import JsonResponse, HttpResponseRedirect
 from django.utils.decorators import method_decorator
@@ -7,9 +6,11 @@ from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 
-from pinax.announcements import signals
-from pinax.announcements.forms import AnnouncementForm
-from pinax.announcements.models import Announcement
+from django.contrib.auth.decorators import permission_required
+
+from . import signals
+from .forms import AnnouncementForm
+from .models import Announcement
 
 
 class AnnouncementDetailView(DetailView):

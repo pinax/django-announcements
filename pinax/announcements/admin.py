@@ -1,15 +1,7 @@
 from django.contrib import admin
-
-from pinax.announcements.models import Announcement, Dismissal
-
-# import our user model and determine the field we will use to search by user
 from django.contrib.auth import get_user_model
 
-User = get_user_model()
-if hasattr(User, "USERNAME_FIELD"):
-    username_search = "user__%s" % User.USERNAME_FIELD
-else:
-    username_search = "user__username"
+from .models import Announcement, Dismissal
 
 
 class AnnouncementAdmin(admin.ModelAdmin):
@@ -32,7 +24,14 @@ class AnnouncementAdmin(admin.ModelAdmin):
 
 class DismissalAdmin(admin.ModelAdmin):
     list_display = ("user", "announcement", "dismissed_at")
-    search_fields = (username_search, "announcement__title")
+
+    def get_search_fields(self, request):
+        User = get_user_model()
+        if hasattr(User, "USERNAME_FIELD"):
+            username_search = "user__%s" % User.USERNAME_FIELD
+        else:
+            username_search = "user__username"
+        return (username_search, "announcement__title")
 
 
 admin.site.register(Announcement, AnnouncementAdmin)
