@@ -1,7 +1,7 @@
 # Usage
 
 Displaying announcements is done via a template tag that fetches the
-announcements::
+announcements:
 
     {% load pinax_announcements_tags %}
 
@@ -33,4 +33,4 @@ the supplied detail view::
 
 
 The `announcement.dismiss_url` is intended to be called via an AJAX POST
-and will dismiss the announcement based on it's dismissal properties
+and will dismiss the announcement based on it's dismissal properties.
