@@ -12,10 +12,18 @@ DEFAULT_SETTINGS = dict(
         "django.contrib.auth",
         "django.contrib.contenttypes",
         "django.contrib.sites",
+        "django.contrib.sessions",
+        "account",
+        "pinax_theme_bootstrap",
+        "bootstrapform",
         "pinax.announcements",
         "pinax.announcements.tests"
     ],
-    MIDDLEWARE_CLASSES=[],
+    MIDDLEWARE_CLASSES=[
+        "django.contrib.sessions.middleware.SessionMiddleware",
+        "django.contrib.auth.middleware.AuthenticationMiddleware",
+        "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
+    ],
     DATABASES={
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -25,6 +33,23 @@ DEFAULT_SETTINGS = dict(
     SITE_ID=1,
     ROOT_URLCONF="pinax.announcements.tests.urls",
     SECRET_KEY="notasecret",
+    AUTHENTICATION_BACKENDS=[
+        "account.auth_backends.UsernameAuthenticationBackend",
+        "pinax.announcements.auth_backends.AnnouncementPermissionsBackend",
+    ],
+    TEMPLATES=[
+        {
+            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "APP_DIRS": True,
+            "OPTIONS": {
+                "context_processors": [
+                    "django.contrib.auth.context_processors.auth",
+                    "account.context_processors.account",
+                    "pinax_theme_bootstrap.context_processors.theme",
+                ]
+            }
+        },
+    ]
 )
 
 

@@ -16,7 +16,7 @@ announcements::
                     <strong>{{ announcement.title }}</strong><br />
                     {{ announcement.content }}
                     {% if announcement.dismiss_url %}
-                        <a href="{{ announcement.dismiss_url }}" class="ajax" data-clear-closest=".announcement">
+                        <a href="{{ announcement.dismiss_url }}" class="btn ajax" data-method="post" data-replace-closest=".announcement">
                             Clear
                         </a>
                     {% endif %}
