@@ -1,20 +1,5 @@
 # pinax-announcements
 
-[Pinax](http://pinaxproject.com/pinax/) is an open source ecosystem
-of reusable Django apps, themes, and starter project templates.
-
-As a reusable Django app, `pinax-announcements` provides the ecosystem with
-a well tested, documented, and proven solution for any site that
-that wants to support announcements for either members only or for all users.
-
-Some sites need the ability to broadcast an announcement to all of their
-users. django-announcements was created precisely for this reason. How you
-present the announcement is up to you as the site-developer. There are two
-different types of filtering of announcements:
-
- * site-wide (this can be presented to anonymous users)
- * members only (announcements for only logged in users)
-
 ## Quickstart
 
 Install the development version:
@@ -41,3 +26,5 @@ Optionally, if you want someone other than staff users to manage announcements::
         "pinax.announcements.auth_backends.AnnouncementPermissionsBackend",
         ...
     ]
+
+See also [Usage](./usage.md) for implementation details and [Changelog](./changelog.md) for a list of changes.
