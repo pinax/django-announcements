@@ -25,8 +25,8 @@ Announcements have title and content, with options for filtering their display:
 
 * `site_wide` - True or False
 * `members_only` - True or False
-* `publish_start` - date/time or never display
-* `publish_end` - date/time or display forever
+* `publish_start` - date/time or none
+* `publish_end` - date/time or none
 
 `pinax-announcements` has three options for dismissing an announcement:
 
