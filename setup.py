@@ -15,7 +15,7 @@ setup(
     author_email="team@pinaxproject.com",
     description="a Django announcements app",
     name="pinax-announcements",
-    long_description=read("README.rst"),
+    long_description=read("README.md"),
     version="2.0.2",
     url="http://github.com/pinax/pinax-announcements/",
     license="MIT",
