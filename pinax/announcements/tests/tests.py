@@ -14,15 +14,13 @@ from ..models import (
     Announcement,
     Dismissal,
 )
-
-"""
-# Check for signal emitted after test actions!
-from ..signals import (
-    announcement_created,
-    announcement_deleted,
-    announcement_updated,
+from ..views import (
+    AnnouncementDetailView,
+    AnnouncementCreateView,
+    AnnouncementUpdateView,
+    AnnouncementDeleteView,
+    AnnouncementListView,
 )
-"""
 
 
 class TestModels(TestCase):
@@ -83,6 +81,8 @@ class TestViews(TestCase):
 
         self.login_redirect = settings.LOGIN_URL
 
+        self.factory = RequestFactory()
+
     def assertRedirectsToLogin(self, response, next):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
@@ -98,20 +98,29 @@ class TestViews(TestCase):
         """
         Ensure Announcement views cannot be seen by user without "can_manage" perm.
         """
-        # Create user without "can_manage" permission.
-        with self.login(self.user):
+        url = reverse(self.create_urlname)
+        request = self.factory.get(url)
+        request.user = self.user
+        response = AnnouncementCreateView.as_view()(request)
+        self.assertRedirectsToLogin(response, url)
 
-            response = self.get(self.create_urlname)
-            self.assertRedirectsToLogin(response, reverse(self.create_urlname))
+        url = reverse(self.list_urlname)
+        request = self.factory.get(url)
+        request.user = self.user
+        response = AnnouncementListView.as_view()(request)
+        self.assertRedirectsToLogin(response, url)
 
-            response = self.get(self.list_urlname)
-            self.assertRedirectsToLogin(response, reverse(self.list_urlname))
+        url = reverse(self.delete_urlname, kwargs=dict(pk=1))
+        request = self.factory.get(url)
+        request.user = self.user
+        response = AnnouncementDeleteView.as_view()(request, pk=1)
+        self.assertRedirectsToLogin(response, url)
 
-            response = self.get(self.delete_urlname, pk=1)
-            self.assertRedirectsToLogin(response, reverse(self.delete_urlname, kwargs=dict(pk=1)))
-
-            response = self.get(self.update_urlname, pk=1)
-            self.assertRedirectsToLogin(response, reverse(self.update_urlname, kwargs=dict(pk=1)))
+        url = reverse(self.update_urlname, kwargs=dict(pk=1))
+        request = self.factory.get(url)
+        request.user = self.user
+        response = AnnouncementUpdateView.as_view()(request, pk=1)
+        self.assertRedirectsToLogin(response, url)
 
     def test_user_create(self):
         """
@@ -124,9 +133,12 @@ class TestViews(TestCase):
             dismissal_type=Announcement.DISMISSAL_SESSION,
             publish_start=timezone.now(),
         )
-        with self.login(self.user):
-            response = self.post(self.create_urlname, data=post_args)
-            self.assertRedirectsToLogin(response, reverse(self.create_urlname))
+        url = reverse(self.create_urlname)
+        request = self.factory.post(url)
+        request.user = self.user
+        request.POST = post_args
+        response = AnnouncementCreateView.as_view()(request)
+        self.assertRedirectsToLogin(response, url)
 
     def test_staff_create(self):
         """
@@ -139,10 +151,16 @@ class TestViews(TestCase):
             dismissal_type=Announcement.DISMISSAL_SESSION,
             publish_start=timezone.now(),
         )
-        with self.login(self.staff):
-            response = self.post(self.create_urlname, data=post_args, follow=True)
-            self.response_200(response)
-            self.assertTrue(Announcement.objects.get(title=self.title))
+        url = reverse(self.create_urlname)
+        request = self.factory.post(url)
+        request.user = self.staff
+        request.POST = post_args
+        with mock.patch("pinax.announcements.signals.announcement_created.send", autospec=True) as mocked_handler:
+            response = AnnouncementCreateView.as_view()(request)
+            self.assertEqual(response.status_code, 302)
+            self.assertEquals(mocked_handler.call_count, 1)
+            announcement = Announcement.objects.get(title=self.title)
+            mocked_handler.assert_called_with(sender=announcement, announcement=announcement, request=request)
 
     def test_user_detail(self):
         """
@@ -154,10 +172,13 @@ class TestViews(TestCase):
             creator=self.staff,
             site_wide=False
         )
-        with self.login(self.user):
-            self.get_check_200(self.detail_urlname, pk=announcement.pk)
-            content_object = self.get_context("object")
-            self.assertEqual(announcement, content_object)
+        url = reverse(self.detail_urlname, kwargs=dict(pk=announcement.pk))
+        request = self.factory.get(url)
+        request.user = self.user
+        response = AnnouncementDetailView.as_view()(request, pk=announcement.pk)
+        self.assertEqual(response.status_code, 200)
+        content_object = response.context_data.get("object")
+        self.assertEqual(announcement, content_object)
 
     def test_user_update(self):
         """
@@ -173,13 +194,12 @@ class TestViews(TestCase):
         post_args = dict(
             title=new_title,
         )
-        with self.login(self.user):
-            response = self.post(self.update_urlname, pk=announcement.pk, data=post_args)
-            self.response_302(response)
-            self.assertRedirectsToLogin(
-                response,
-                reverse(self.update_urlname, kwargs=dict(pk=announcement.pk))
-            )
+        url = reverse(self.update_urlname, kwargs=dict(pk=announcement.pk))
+        request = self.factory.post(url)
+        request.user = self.user
+        request.POST = post_args
+        response = AnnouncementUpdateView.as_view()(request, pk=announcement.pk)
+        self.assertRedirectsToLogin(response, url)
 
     def test_staff_update(self):
         """
@@ -199,15 +219,17 @@ class TestViews(TestCase):
             dismissal_type=announcement.dismissal_type,
             publish_start=announcement.publish_start
         )
-        with self.login(self.staff):
-            response = self.post(
-                self.update_urlname,
-                pk=announcement.pk,
-                data=post_args
-            )
-            self.response_302(response)
+        url = reverse(self.update_urlname, kwargs=dict(pk=announcement.pk))
+        request = self.factory.post(url)
+        request.user = self.staff
+        request.POST = post_args
+        with mock.patch("pinax.announcements.signals.announcement_updated.send", autospec=True) as mocked_handler:
+            response = AnnouncementUpdateView.as_view()(request, pk=announcement.pk)
+            self.assertEqual(response.status_code, 302)
             updated_announcement = Announcement.objects.get(pk=announcement.pk)
             self.assertEqual(updated_announcement.title, new_title)
+            self.assertEquals(mocked_handler.call_count, 1)
+            mocked_handler.assert_called_with(sender=announcement, announcement=announcement, request=request)
 
     def test_user_dismiss_session(self):
         """
@@ -280,7 +302,7 @@ class TestViews(TestCase):
             self.post(
                 self.dismiss_urlname,
                 pk=announcement.pk,
-                extra=dict(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                extra=dict(HTTP_X_REQUESTED_WITH="XMLHttpRequest")
             )
             self.response_200()
             self.assertFalse(Dismissal.objects.filter(announcement=announcement))
@@ -304,7 +326,7 @@ class TestViews(TestCase):
             response = self.post(
                 self.dismiss_urlname,
                 pk=announcement.pk,
-                extra=dict(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                extra=dict(HTTP_X_REQUESTED_WITH="XMLHttpRequest")
             )
             self.assertEqual(response.status_code, 409)
             self.assertFalse(Dismissal.objects.filter(announcement=announcement))
@@ -326,7 +348,7 @@ class TestViews(TestCase):
             self.post(
                 self.dismiss_urlname,
                 pk=announcement.pk,
-                extra=dict(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+                extra=dict(HTTP_X_REQUESTED_WITH="XMLHttpRequest")
             )
             self.response_200()
             self.assertTrue(announcement.dismissals.all())
@@ -343,10 +365,13 @@ class TestViews(TestCase):
             creator=self.staff,
             site_wide=False
         )
-        with self.login(self.staff):
-            self.get("pinax_announcements:announcement_list")
-            self.response_200()
-            self.assertSequenceEqual(self.last_response.context["object_list"], [announcement])
+        url = reverse(self.list_urlname)
+        request = self.factory.get(url)
+        request.user = self.staff
+        response = AnnouncementListView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+        object_list = response.context_data.get("object_list")
+        self.assertSequenceEqual(object_list, [announcement])
 
     def test_user_delete(self):
         """
@@ -358,12 +383,11 @@ class TestViews(TestCase):
             creator=self.staff,
             site_wide=False
         )
-        with self.login(self.user):
-            response = self.post(self.delete_urlname, pk=announcement.pk)
-            self.assertRedirectsToLogin(
-                response,
-                reverse(self.delete_urlname, kwargs=dict(pk=announcement.pk))
-            )
+        url = reverse(self.delete_urlname, kwargs=dict(pk=announcement.pk))
+        request = self.factory.post(url)
+        request.user = self.user
+        response = AnnouncementDeleteView.as_view()(request, pk=announcement.pk)
+        self.assertRedirectsToLogin(response, url)
 
     def test_staff_delete(self):
         """
@@ -375,16 +399,14 @@ class TestViews(TestCase):
             creator=self.staff,
             site_wide=False
         )
-        with self.login(self.staff):
-            response = self.get(self.delete_urlname, pk=announcement.pk)
-            self.response_200(response)
-            self.assertTrue(
-                'pinax/announcements/announcement_confirm_delete.html' in response.template_name
-            )
-
-            response = self.post(self.delete_urlname, pk=announcement.pk, follow=True)
-            self.response_200(response)
+        url = reverse(self.delete_urlname, kwargs=dict(pk=announcement.pk))
+        request = self.factory.post(url)
+        request.user = self.staff
+        with mock.patch("pinax.announcements.signals.announcement_deleted.send", autospec=True) as mocked_handler:
+            response = AnnouncementDeleteView.as_view()(request, pk=announcement.pk)
+            self.assertEqual(response.status_code, 302)
             self.assertFalse(Announcement.objects.filter(pk=announcement.pk))
+            self.assertEquals(mocked_handler.call_count, 1)
 
 
 class TestTags(TestCase):

@@ -76,6 +76,7 @@ class AnnouncementUpdateView(ProtectedView, UpdateView):
     template_name = "pinax/announcements/announcement_form.html"
     model = Announcement
     form_class = AnnouncementForm
+    success_url = reverse_lazy("pinax_announcements:announcement_list")
 
     def form_valid(self, form):
         response = super(AnnouncementUpdateView, self).form_valid(form)
@@ -85,9 +86,6 @@ class AnnouncementUpdateView(ProtectedView, UpdateView):
             request=self.request
         )
         return response
-
-    def get_success_url(self):
-        return reverse("pinax_announcements:announcement_list")
 
 
 class AnnouncementDeleteView(ProtectedView, DeleteView):
