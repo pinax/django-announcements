@@ -1,30 +1,16 @@
 # pinax-announcements
 
-## Quickstart
+`pinax-announcements` is a well tested, documented, and proven solution
+for any site wanting announcements for it's users.
 
-Install the development version:
+## Contents
 
-    pip install pinax-announcements
+* [Installation](./installation.md)
+* [Usage](./usage.md)
+* [Template tags](./templatetags.md)
+* [Signals](./signals.md)
+* [Changelog](./changelog.md)
 
-Add `pinax.announcements` to your `INSTALLED_APPS` setting:
+## Development
 
-    INSTALLED_APPS = (
-        # ...
-        "pinax.announcements",
-        # ...
-    )
-
-Add entry to your `urls.py`:
-
-    url(r"^announcements/", include("pinax.announcements.urls", namespace="pinax_announcements")),
-
-
-Optionally, if you want someone other than staff users to manage announcements::
-
-    AUTHENTICATION_BACKENDS = [
-        ...
-        "pinax.announcements.auth_backends.AnnouncementPermissionsBackend",
-        ...
-    ]
-
-See also [Usage](./usage.md) for implementation details and [Changelog](./changelog.md) for a list of changes.
+The `pinax-announcements` source repository can be found at [https://github.com/pinax/pinax-announcements]( https://github.com/pinax/pinax-announcements).

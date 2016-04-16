@@ -9,31 +9,34 @@
 
 ## Pinax
 
-[Pinax](http://pinaxproject.com/pinax/) is an open-source platform built on the Django Web Framework. It is an ecosystem of reusable Django apps, themes, and starter project templates.
+[Pinax](http://pinaxproject.com/pinax/) is an open-source platform built on the
+Django Web Framework. It is an ecosystem of reusable Django apps, themes, and
+starter project templates.
+
+This app is part of the Pinax ecosystem and designed for use both with and
+independently of other Pinax apps.
 
 ## pinax-announcements
 
-As a reusable Django app, `pinax-announcements` provides the ecosystem with
-a well tested, documented, and proven solution for any site that
-that wants to support announcements for either members only or for all users.
+`pinax-announcements` is a well tested, documented, and proven solution
+for any site wanting announcements for it's users.
 
-Some sites need the ability to broadcast an announcement to all of their
-users. pinax-announcements was created precisely for this reason. How you
-present the announcement is up to you as the site-developer. When working with
-announcements that are presented on the website one feature is that they are
-only viewed once. A session variable will hold which announcements an user has
-viewed and exclude that from their display. pinax-nnouncements supports three
-different types of filtering of announcements:
+Announcements have title and content, with options for filtering their display:
 
-* site-wide (this can be presented to anonymous users)
-* non site-wide (these can be used a strictly a mailing if so desired)
-* members only (announcements are filtered based on the value of
-   ``request.user``)
+* `site_wide` - True or False
+* `members_only` - True or False
+* `publish_start` - date/time or never display
+* `publish_end` - date/time or display forever
+
+`pinax-announcements` has three options for dismissing an announcement:
+
+* `DISMISSAL_NO` - always visible
+* `DISMISSAL_SESSION` - dismiss for the session
+* `DISMISSAL_PERMANENT` - dismiss forever
 
 ## Getting Started and Documentation
 
 Follow steps outlined in [Pinax Announcements Documentation](docs/index.md).
-
 
 ## Contribute
 

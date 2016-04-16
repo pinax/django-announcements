@@ -2,10 +2,11 @@
 
 ## 2.0.2
 
-* Converted to Django class-based generic views.
-* Added URL namespace "pinax_announcements"
-* Added tests, including signal handler checking.
+* Convert to Django class-based generic views
+* Add URL namespace "pinax_announcements"
+* Add tests, including signal handler checking
 * Drop support for Django < 1.8
+* Improve documentation
 
 ## 1.2.0
 
