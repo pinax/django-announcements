@@ -23,7 +23,7 @@ enable this authentication backend:
 
 then enable permission `"announcements.can_manage"` for these managers.
 
-Lastly add `pinax.announcements.urls` to your project urlpatterns.py:
+Lastly add `pinax.announcements.urls` to your project urlpatterns:
 
     urlpatterns = [
         ...
