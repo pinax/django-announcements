@@ -13,7 +13,7 @@
 Django Web Framework. It is an ecosystem of reusable Django apps, themes, and
 starter project templates.
 
-This app is part of the Pinax ecosystem and designed for use both with and
+This app is part of the Pinax ecosystem and is designed for use both with and
 independently of other Pinax apps.
 
 ## pinax-announcements
