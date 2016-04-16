@@ -15,22 +15,21 @@ setup(
     author_email="team@pinaxproject.com",
     description="a Django announcements app",
     name="pinax-announcements",
-    long_description=read("README.rst"),
-    version="2.0.1",
+    long_description=read("README.md"),
+    version="2.0.2",
     url="http://github.com/pinax/pinax-announcements/",
     license="MIT",
     packages=find_packages(),
     package_data={
         "announcements": []
     },
+    install_requires=[
+    ],
     test_suite="runtests.runtests",
     tests_require=[
+        "mock>=1.3.0",
         "django-test-plus>=1.0.11",
         "pinax-theme-bootstrap>=7.7.0",
-    ],
-    install_requires=[
-        "django-appconf>=1.0.1",
-        "django-user-accounts>=1.3.1",
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",

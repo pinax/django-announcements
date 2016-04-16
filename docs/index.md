@@ -1,52 +1,16 @@
 # pinax-announcements
 
-Originally named `django-announcements`, the announcements app is now known as `pinax-announcements`.
+`pinax-announcements` is a well tested, documented, and proven solution
+for any site wanting announcements for it's users.
 
-Some sites need the ability to broadcast an announcement to all of their
-users. django-announcements was created precisely for this reason. How you
-present the announcement is up to you as the site-developer. There are two
-different types of filtering of announcements:
+## Contents
 
- * site-wide (this can be presented to anonymous users)
- * members only (announcements for only logged in users)
+* [Installation](./installation.md)
+* [Usage](./usage.md)
+* [Template tags](./templatetags.md)
+* [Signals](./signals.md)
+* [Changelog](./changelog.md)
 
-!!! note "Pinax Ecosystem"
-    This app was developed as part of the Pinax ecosystem but is just a Django app
-    and can be used independently of other Pinax apps.
-    
-    To learn more about Pinax, see <http://pinaxproject.com/>
+## Development
 
-
-## Quickstart
-
-Install the development version:
-
-    pip install pinax-announcements
-
-Add `pinax.announcements` to your `INSTALLED_APPS` setting:
-
-    INSTALLED_APPS = (
-        # ...
-        "pinax.announcements",
-        # ...
-    )
-
-Add entry to your `urls.py`:
-
-    url(r"^announcements/", include("pinax.announcements.urls", namespace="pinax_announcements")),
-
-
-Optionally, if you want someone other than staff users to manage announcements::
-
-    AUTHENTICATION_BACKENDS = [
-        ...
-        "pinax.announcements.auth_backends.AnnouncementPermissionsBackend",
-        ...
-    ]
-
-## Dependencies
-
-* `django-appconf>=1.0.1`
-
-
-
+The `pinax-announcements` source repository can be found at [https://github.com/pinax/pinax-announcements]( https://github.com/pinax/pinax-announcements).

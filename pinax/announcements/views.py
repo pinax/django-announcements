@@ -1,5 +1,9 @@
-from django.core.urlresolvers import reverse, reverse_lazy
-from django.http import JsonResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse_lazy
+from django.http import (
+    HttpResponse,
+    HttpResponseRedirect,
+    JsonResponse,
+)
 from django.utils.decorators import method_decorator
 from django.views.generic import View, DetailView
 from django.views.generic.detail import SingleObjectMixin
@@ -40,7 +44,8 @@ class AnnouncementDismissView(SingleObjectMixin, View):
 
         if request.is_ajax():
             return JsonResponse({}, status=status)
-        return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+        else:
+            return HttpResponse(content=b"", status=status)
 
 
 class ProtectedView(View):
@@ -53,6 +58,7 @@ class AnnouncementCreateView(ProtectedView, CreateView):
     template_name = "pinax/announcements/announcement_form.html"
     model = Announcement
     form_class = AnnouncementForm
+    success_url = reverse_lazy("pinax_announcements:announcement_list")
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -63,16 +69,14 @@ class AnnouncementCreateView(ProtectedView, CreateView):
             announcement=self.object,
             request=self.request
         )
-        return super(AnnouncementCreateView, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse("pinax_announcements:announcement_list")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class AnnouncementUpdateView(ProtectedView, UpdateView):
     template_name = "pinax/announcements/announcement_form.html"
     model = Announcement
     form_class = AnnouncementForm
+    success_url = reverse_lazy("pinax_announcements:announcement_list")
 
     def form_valid(self, form):
         response = super(AnnouncementUpdateView, self).form_valid(form)
@@ -82,9 +86,6 @@ class AnnouncementUpdateView(ProtectedView, UpdateView):
             request=self.request
         )
         return response
-
-    def get_success_url(self):
-        return reverse("pinax_announcements:announcement_list")
 
 
 class AnnouncementDeleteView(ProtectedView, DeleteView):
