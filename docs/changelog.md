@@ -1,6 +1,6 @@
 # Change Log
 
-## 2.0.2
+## 2.0.3
 
 * Convert to Django class-based generic views
 * Add URL namespace "pinax_announcements"

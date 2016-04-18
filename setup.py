@@ -9,14 +9,21 @@ def read(*parts):
     with codecs.open(filename, encoding="utf-8") as fp:
         return fp.read()
 
+try:
+    from pypandoc import convert
+    read_md = lambda f: convert(f, "rst").replace("\r","")
+except (ImportError, IOError):
+    print("warning: pypandoc module not found, could not convert Markdown to RST")
+    read_md = lambda f: read(f)
+
 
 setup(
     author="Pinax Team",
     author_email="team@pinaxproject.com",
     description="a Django announcements app",
     name="pinax-announcements",
-    long_description=read("README.md"),
-    version="2.0.2",
+    long_description=read_md("README.md"),
+    version="2.0.3",
     url="http://github.com/pinax/pinax-announcements/",
     license="MIT",
     packages=find_packages(),
