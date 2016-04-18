@@ -36,7 +36,7 @@ Announcements have title and content, with options for filtering their display:
 
 ## Getting Started and Documentation
 
-Follow steps outlined in [Pinax Announcements Documentation](docs/index.md).
+Follow steps outlined in [Pinax Announcements Documentation](https://github.com/pinax/pinax-announcements/blob/master/docs/index.md).
 
 ## Contribute
 
