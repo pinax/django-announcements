@@ -5,7 +5,7 @@
 Bootstrap-based templates for this app can be found in `pinax-theme-bootstrap`.
 If you install `pinax-theme-bootstrap`, these templates will be available in
 your project. If you don't want to install `pinax-theme-bootstrap`, you can
-just use the templates there as examples.
+just use the templates there as examples for your own templates.
 
 
 ## Displaying Announcements
