@@ -2,10 +2,17 @@
 
 ## Templates
 
-Bootstrap-based templates for this app can be found in `pinax-theme-bootstrap`.
-If you install `pinax-theme-bootstrap`, these templates will be available in
-your project. If you don't want to install `pinax-theme-bootstrap`, you can
-just use the templates there as examples for your own templates.
+You have two options for `pinax-announcements` templates:
+
+### 1. Use pre-built Bootstrap-based templates
+
+This is the simplest method. `pinax-announcements` templates are found in the Pinax `pinax-theme-bootstrap` [theme project](https://github.com/pinax/pinax-theme-bootstrap). These templates work with the Bootstrap front-end framework as well as the Font Awesome icon library. If you [include](https://github.com/pinax/pinax-theme-bootstrap#getting-started) `pinax-theme-bootstrap` in your project these templates and icons are found and used automatically.
+
+### 2. Create new templates
+
+Just a bit more effort—copy `pinax-theme-bootstrap` [templates](https://github.com/pinax/pinax-theme-bootstrap/tree/master/pinax_theme_bootstrap/templates/pinax/announcements) into your project and modify as needed.
+
+For instance, if your project doesn't use Bootstrap, remove Bootstrap and Font Awesome class names from your templates copies. Remove class references like `class="btn btn-success"` and `class="icon icon-pencil"` as well as removing `bootstrap` from the `{% load i18n bootstrap %}` statement. Since `bootstrap` template tags and filters are no longer loaded, you'll also need to update `{{ form|bootstrap }}` to `{{ form }}` since the "bootstrap" filter is no longer available.
 
 
 ## Displaying Announcements
