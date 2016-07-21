@@ -34,11 +34,11 @@ See [Template tags](./templatetags.md) for detail on pinax-announcements templat
 
 Add this markup to show a "Dismiss" link if available:
 
-                    {% if announcement.dismiss_url %}
-                        <a href="{{ announcement.dismiss_url }}" class="btn ajax" data-method="post" data-replace-closest=".announcement">
-                            Clear
-                        </a>
-                    {% endif %}
+    {% if announcement.dismiss_url %}
+        <a href="{{ announcement.dismiss_url }}" class="btn ajax" data-method="post" data-replace-closest=".announcement">
+            Clear
+        </a>
+    {% endif %}
 
 ### Dismissal with Eldarion AJAX
 
