@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.0.4
+
+* Fixed dismiss documentation
+
 ## 2.0.3
 
 * Convert to Django class-based generic views
