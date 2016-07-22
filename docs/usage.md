@@ -50,9 +50,10 @@ See [Template tags](./templatetags.md) for detail on pinax-announcements templat
 Add this markup to show a "Dismiss" link if available:
 
     {% if announcement.dismiss_url %}
-        <a href="{{ announcement.dismiss_url }}" class="btn ajax" data-method="post" data-replace-closest=".announcement">
-            Clear
-        </a>
+        <form class="form ajax" data-replace-closest=".announcement" action="{{ announcement.dismiss_url }}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-default">Clear</button>
+        </form>
     {% endif %}
 
 ### Dismissal with Eldarion AJAX
@@ -74,5 +75,3 @@ This of course is optional. You can roll your own JavaScript handling as
 the view also returns data in addition to rendered HTML. Furthermore, if
 you don't want `ajax` at all the view will handle a regular `POST` and
 perform a redirect.
-
-
