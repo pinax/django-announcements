@@ -23,7 +23,7 @@ setup(
     description="a Django announcements app",
     name="pinax-announcements",
     long_description=read_md("README.md"),
-    version="2.0.3",
+    version="2.0.4",
     url="http://github.com/pinax/pinax-announcements/",
     license="MIT",
     packages=find_packages(),
