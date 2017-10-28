@@ -81,14 +81,13 @@ Django's coding style:
 * URL patterns should use the `url()` function rather than a tuple.
 
 Here is an example of these rules applied:
-
+```
     # first set of imports are stdlib imports
     # non-from imports go first then from style import in their own group
     import csv
     
     # second set of imports are Django imports with contrib in their own
     # group.
-    from django.core.urlresolvers import reverse
     from django.db import models
     from django.utils import timezone
     from django.utils.translation import ugettext_lazy as _
@@ -99,6 +98,7 @@ Here is an example of these rules applied:
     from tagging.fields import TagField
     
     # fourth set of imports are local apps
+    from .compat import reverse
     from .fields import MarkupField
     
     
@@ -133,7 +133,7 @@ Here is an example of these rules applied:
     class TaskComment(models.Model):
         # ... you get the point ...
         pass
-
+```
 
 ## Pull Requests
 

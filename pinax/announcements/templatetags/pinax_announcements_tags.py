@@ -4,7 +4,6 @@ from django.utils import timezone
 
 from pinax.announcements.models import Announcement
 
-
 register = template.Library()
 
 

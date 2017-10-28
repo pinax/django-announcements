@@ -1,18 +1,13 @@
-from django.core.urlresolvers import reverse_lazy
-from django.http import (
-    HttpResponse,
-    HttpResponseRedirect,
-    JsonResponse,
-)
+from django.contrib.auth.decorators import permission_required
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.utils.decorators import method_decorator
-from django.views.generic import View, DetailView
+from django.views.generic import DetailView, View
 from django.views.generic.detail import SingleObjectMixin
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
-from django.contrib.auth.decorators import permission_required
-
 from . import signals
+from .compat import reverse_lazy
 from .forms import AnnouncementForm
 from .models import Announcement
 

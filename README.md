@@ -1,11 +1,17 @@
+![](http://pinaxproject.com/pinax-design/patches/pinax-announcements.svg)
+
 # Pinax Announcements
 
-[![](http://slack.pinaxproject.com/badge.svg)](http://slack.pinaxproject.com/)
-[![](https://img.shields.io/travis/pinax/pinax-announcements.svg)](https://travis-ci.org/pinax/pinax-announcements)
-[![](https://img.shields.io/coveralls/pinax/pinax-announcements.svg)](https://coveralls.io/r/pinax/pinax-announcements)
-[![](https://img.shields.io/pypi/dm/pinax-announcements.svg)](https://pypi.python.org/pypi/pinax-announcements/)
 [![](https://img.shields.io/pypi/v/pinax-announcements.svg)](https://pypi.python.org/pypi/pinax-announcements/)
 [![](https://img.shields.io/badge/license-MIT-blue.svg)](https://pypi.python.org/pypi/pinax-announcements/)
+
+[![CircleCi](https://img.shields.io/circleci/project/github/pinax/pinax-announcements.svg)](https://circleci.com/gh/pinax/pinax-announcements)
+[![Codecov](https://img.shields.io/codecov/c/github/pinax/pinax-announcements.svg)](https://codecov.io/gh/pinax/pinax-announcements)
+![](https://img.shields.io/github/contributors/pinax/pinax-announcements.svg)
+![](https://img.shields.io/github/issues-pr/pinax/pinax-announcements.svg)
+![](https://img.shields.io/github/issues-pr-closed/pinax/pinax-announcements.svg)
+
+[![](http://slack.pinaxproject.com/badge.svg)](http://slack.pinaxproject.com/)
 
 ## Pinax
 
@@ -33,6 +39,11 @@ Announcements have title and content, with options for filtering their display:
 * `DISMISSAL_NO` - always visible
 * `DISMISSAL_SESSION` - dismiss for the session
 * `DISMISSAL_PERMANENT` - dismiss forever
+
+## Requirements
+
+* Django 1.8, 1.10, 1.11, and 2.0
+* Python 2.7, 3.4, 3.5, and 3.6
 
 ## Getting Started and Documentation
 

@@ -17,6 +17,12 @@ except (ImportError, IOError):
     read_md = lambda f: read(f)
 
 
+tests_require = [
+    "django-test-plus>=1.0.19",
+    "pinax-theme-bootstrap>=7.7.0",
+    "mock",
+]
+
 setup(
     author="Pinax Team",
     author_email="team@pinaxproject.com",
@@ -30,25 +36,33 @@ setup(
     package_data={
         "announcements": []
     },
-    install_requires=[
-    ],
-    test_suite="runtests.runtests",
-    tests_require=[
-        "mock>=1.3.0",
-        "django-test-plus>=1.0.11",
-        "pinax-theme-bootstrap>=7.7.0",
-    ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
         "Framework :: Django",
+        'Framework :: Django :: 1.8',
+        'Framework :: Django :: 1.10',
+        'Framework :: Django :: 1.11',
+        'Framework :: Django :: 2.0',
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 3",
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
+    install_requires=[
+        "django>=1.8",
+    ],
+    extras_require={
+        "pytest": ["pytest", "pytest-django"] + tests_require,
+    },
+    test_suite="runtests.runtests",
+    tests_require=tests_require,
     zip_safe=False
 )

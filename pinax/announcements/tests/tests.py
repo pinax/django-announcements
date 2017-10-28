@@ -1,25 +1,21 @@
-import mock
-
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.sessions.models import Session
-from django.core.urlresolvers import reverse
 from django.test import RequestFactory
 from django.utils import timezone
 
 from test_plus.test import TestCase
 
-from ..templatetags.pinax_announcements_tags import announcements as announcements_tag
-from ..models import (
-    Announcement,
-    Dismissal,
-)
+from ..compat import mock, reverse
+from ..models import Announcement, Dismissal
+from ..templatetags.pinax_announcements_tags import \
+    announcements as announcements_tag
 from ..views import (
-    AnnouncementDetailView,
     AnnouncementCreateView,
-    AnnouncementUpdateView,
     AnnouncementDeleteView,
+    AnnouncementDetailView,
     AnnouncementListView,
+    AnnouncementUpdateView
 )
 
 
