@@ -16,13 +16,6 @@ except (ImportError, IOError):
     print("warning: pypandoc module not found, could not convert Markdown to RST")
     read_md = lambda f: read(f)
 
-
-tests_require = [
-    "django-test-plus>=1.0.19",
-    "pinax-theme-bootstrap>=7.7.0",
-    "mock",
-]
-
 setup(
     author="Pinax Team",
     author_email="team@pinaxproject.com",
@@ -59,10 +52,11 @@ setup(
     install_requires=[
         "django>=1.8",
     ],
-    extras_require={
-        "pytest": ["pytest", "pytest-django"] + tests_require,
-    },
+    tests_require=[
+        "django-test-plus>=1.0.19",
+        "pinax-theme-bootstrap>=7.7.0",
+        "mock",
+    ],
     test_suite="runtests.runtests",
-    tests_require=tests_require,
     zip_safe=False
 )
