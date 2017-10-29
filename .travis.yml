@@ -22,7 +22,5 @@ install:
   - pip install tox coveralls
 script:
   - tox -e py${TRAVIS_PYTHON_VERSION//[.]/}-$DJANGO
-after_success:
-  - coveralls
 notifications:
   slack: pinax:APzbv4UOoGNc179YUOEdK5hn
