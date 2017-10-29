@@ -6,6 +6,6 @@ pages:
 - [changelog.md, Change Log]
 theme: readthedocs
 repo_url: https://github.com/pinax/pinax-announcements
-site_description: "documentation for pinax-announcements, a announcements app for Django sites"
+site_description: "documentation for pinax-announcements, an announcements app for Django sites"
 site_author: "Pinax Team"
 markdown_extensions: [admonition]
