@@ -192,6 +192,13 @@ and which are not dismissed.
 
 ## Change Log
 
+### 2.1
+
+* Add Django 2.0 compatibility testing
+* Drop Django 1.9 and Python 3.3 support
+* Move documentation into README
+* Convert CI and coverage to CircleCi and CodeCov
+
 ### 2.0.4
 
 * Fixed dismiss documentation
