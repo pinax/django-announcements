@@ -1,0 +1,28 @@
+sudo: false
+language: python
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+env:
+  - DJANGO=1.8
+  - DJANGO=1.10
+  - DJANGO=1.11
+  - DJANGO=2.0
+matrix:
+  exclude:
+    - python: "2.7"
+      env: DJANGO=2.0
+    - python: "3.6"
+      env: DJANGO=1.8
+    - python: "3.6"
+      env: DJANGO=1.10
+install:
+  - pip install tox coveralls
+script:
+  - tox -e py${TRAVIS_PYTHON_VERSION//[.]/}-$DJANGO
+after_success:
+  - coveralls
+notifications:
+  slack: pinax:APzbv4UOoGNc179YUOEdK5hn
