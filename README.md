@@ -13,17 +13,6 @@
 
 [![](http://slack.pinaxproject.com/badge.svg)](http://slack.pinaxproject.com/)
 
-## Pinax
-
-[Pinax](http://pinaxproject.com/pinax/) is an open-source platform built on the
-Django Web Framework. It is an ecosystem of reusable Django apps, themes, and
-starter project templates.
-
-This app is part of the Pinax ecosystem and is designed for use both with and
-independently of other Pinax apps.
-
-## pinax-announcements
-
 `pinax-announcements` is a well tested, documented, and proven solution
 for any site wanting announcements for it's users.
 
@@ -39,30 +28,249 @@ Announcements have title and content, with options for filtering their display:
 * `DISMISSAL_NO` - always visible
 * `DISMISSAL_SESSION` - dismiss for the session
 * `DISMISSAL_PERMANENT` - dismiss forever
-
-## Requirements
+### Supported Django and Python Versions
 
 * Django 1.8, 1.10, 1.11, and 2.0
 * Python 2.7, 3.4, 3.5, and 3.6
 
-## Getting Started and Documentation
+## Table of Contents
 
-Follow steps outlined in [Pinax Announcements Documentation](https://github.com/pinax/pinax-announcements/blob/master/docs/index.md).
+* [Installation](#installation)
+* [Usage](#usage)
+* [Signals](#signals)
+* [Template Tags](#template-tags)
+* [Change Log](#change-log)
+* [About Pinax](#about-pinax)
 
-## Contribute
+## Installation
 
-See [this blog post](http://blog.pinaxproject.com/2016/02/26/recap-february-pinax-hangout/) including a video, or our [How to Contribute](http://pinaxproject.com/pinax/how_to_contribute/) section for an overview on how contributing to Pinax works. For concrete contribution ideas, please see our [Ways to Contribute/What We Need Help With](http://pinaxproject.com/pinax/ways_to_contribute/) section.
+To install pinax-announcements:
 
-In case of any questions we recommend you [join our Pinax Slack team](http://slack.pinaxproject.com) and ping us there instead of creating an issue on GitHub. Creating issues on GitHub is of course also valid but we are usually able to help you faster if you ping us in Slack.
+    pip install pinax-announcements
 
-We also highly recommend reading our [Open Source and Self-Care blog post](http://blog.pinaxproject.com/2016/01/19/open-source-and-self-care/).
+Add `pinax.announcements` to your `INSTALLED_APPS` setting:
+
+    INSTALLED_APPS = (
+        ...
+        "pinax.announcements",
+        ...
+    )
+
+Optionally, if you want someone other than staff to manage announcements,
+enable this authentication backend:
+
+    AUTHENTICATION_BACKENDS = [
+        ...
+        "pinax.announcements.auth_backends.AnnouncementPermissionsBackend",
+        ...
+    ]
+
+then enable permission `"announcements.can_manage"` for these managers.
+
+Lastly add `pinax.announcements.urls` to your project urlpatterns:
+
+    urlpatterns = [
+        ...
+        url(r"^announcements/", include("pinax.announcements.urls", namespace="pinax_announcements")),
+        ...
+    ]
+
+## Usage
+
+### Templates
+
+You have two options for `pinax-announcements` templates:
+
+#### 1. Use pre-built Bootstrap-based templates
+
+This is the simplest method. `pinax-announcements` templates are found in the Pinax `pinax-theme-bootstrap` [theme project](https://github.com/pinax/pinax-theme-bootstrap). These templates work with the Bootstrap front-end framework as well as the Font Awesome icon library. If you [include](https://github.com/pinax/pinax-theme-bootstrap#getting-started) `pinax-theme-bootstrap` in your project these templates and icons are found and used automatically.
+
+#### 2. Create new templates
+
+Just a bit more effort—copy `pinax-theme-bootstrap` [templates](https://github.com/pinax/pinax-theme-bootstrap/tree/master/pinax_theme_bootstrap/templates/pinax/announcements) into your project and modify as needed.
+
+For instance, if your project doesn't use Bootstrap, remove Bootstrap and Font Awesome class names from your templates copies. Remove class references like `class="btn btn-success"` and `class="icon icon-pencil"` as well as removing `bootstrap` from the `{% load i18n bootstrap %}` statement. Since `bootstrap` template tags and filters are no longer loaded, you'll also need to update `{{ form|bootstrap }}` to `{{ form }}` since the "bootstrap" filter is no longer available.
 
 
-## Code of Conduct
+### Displaying Announcements
 
-In order to foster a kind, inclusive, and harassment-free community, the Pinax Project has a code of conduct, which can be found here http://pinaxproject.com/pinax/code_of_conduct/. We ask you to treat everyone as a smart human programmer that shares an interest in Python, Django, and Pinax with you.
+First load the template tags:
+
+    {% load pinax_announcements_tags %}
+
+Then fetch announcements with the `announcements` template tag:
+
+    <h3>Announcements</h3>
+
+    {% announcements as announcement_list %}
+
+    {% if announcements_list %}
+        <div class="announcements">
+            {% for announcement in announcement_list %}
+                <div class="announcement">
+                    <strong>{{ announcement.title }}</strong><br />
+                    {{ announcement.content }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+If your announcement content is too large for viewing inline
+then show a link to a detail view:
+
+    <a href="{{ announcement.get_absolute_url }}">Read more...</a>
+
+See [Template tags](./templatetags.md) for detail on pinax-announcements template tags.
+
+### Dismissing Announcements
+
+Add this markup to show a "Dismiss" link if available:
+
+    {% if announcement.dismiss_url %}
+        <form class="form ajax" data-replace-closest=".announcement" action="{{ announcement.dismiss_url }}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-default">Clear</button>
+        </form>
+    {% endif %}
+
+#### Dismissal with Eldarion AJAX
+
+The anchor markup shown above and the announcement dismissal view both conform
+to an `AJAX` response that [eldarion-ajax](https://github.com/eldarion/eldarion-ajax) understands.
+Furthermore, the templates that ship with this project will work
+seemlessly with `eldarion-ajax`. All you have to do is include the
+eldarion-ajax.min.js Javascript package in your base template:
+
+    {% load staticfiles %}
+    <script src="{% static "js/eldarion-ajax.min.js" %}"></script>
+
+and include `eldarion-ajax` in your site JavaScript:
+
+    require('eldarion-ajax');
+
+This of course is optional. You can roll your own JavaScript handling as
+the view also returns data in addition to rendered HTML. Furthermore, if
+you don't want `ajax` at all the view will handle a regular `POST` and
+perform a redirect.
+
+## Signals
+
+### pinax.announcements.signals.announcement_created
+
+This signal is sent immediately after an announcement is created.
+It provides a single `kwarg` of `announcement`, the created `Announcement` instance.
+Sender is the newly created Announcement instance.
+
+### pinax.announcements.signals.announcement_updated
+
+This signal is sent immediately after an announcement is updated.
+It provides a single `kwarg` of `announcement`, the updated `Announcement` instance.
+Sender is the newly updated Announcement instance.
+
+### pinax.announcements.signals.announcement_deleted
+
+This signal is sent immediately after an announcement is deleted.
+It provides a single `kwarg` of `announcement`, the deleted `Announcement` instance.
+Sender is `None`.
+
+## Template Tags
+
+### announcements
+
+Filters announcements by `publish_start` and `publish_end` date range, including
+all with no `publish_end` value.
+Returns announcements matching `site_wide == True` and `members_only == False`,
+and which are not dismissed.
+
+    {% announcements as announcement_list %}
+    {% for announcement in announcement_list %}
+        <div>
+            {{ announcement.title }}<br />
+            {{ announcement.content }}
+        </div>
+    {% endfor %}
+
+## Change Log
+
+### 2.0.4
+
+* Fixed dismiss documentation
+
+### 2.0.3
+
+* Convert to Django class-based generic views
+* Add URL namespace "pinax_announcements"
+* Add tests, including signal handler checking
+* Drop support for Django < 1.8
+* Improve documentation
+
+### 1.2.0
+
+* Rename to pinax.announcements
+* Drop support for django < 1.5
+* Rewrite docs for readthedocs with markdown (template based on pinax-blog)
+* Update test config (travis, tox, coveragerc, ...)
+* Update .gitignore
+* Generate django migrations
+* Move templates to pinax/announcements/
+
+### 1.0.1
+
+* fixed included templates to be compatible with Django 1.5
 
 
-## Pinax Project Blog and Twitter
+### 1.0
+
+* removed atom feed
+* renamed dismiss url
+* switched to timezone.now
+* marked some choice field strings for translation
+* swapped view mixin override in favor of auth backend and permission checking
+
+### 0.2
+
+* added ability to publish for periods of time
+* added model to store permanent clearings (see migration below)
+* added ability to control how announcements are cleared (no
+  clearing, session based, or permanent) (see migration below)
+* changed view `announcement_hide` to `dismiss`
+* changed url name of `announcement_hide` to `announcement_dismiss`
+* changed template tag from fetch_announcements to announcements
+* removed send now functionality
+* removed notifications
+* removed context processor
+* removed list view
+* removed AnnouncementsManager
+* removed current_announcements_for_request
+
+
+### Migrations
+
+Migration scripts to move prior installations to latest version::
+
+    ALTER TABLE "announcements_announcement" ADD COLUMN "dismissal_type" int DEFAULT 2 NOT NULL;
+    ALTER TABLE "announcements_announcement" ADD COLUMN "publish_start" timestamp with time zone NOT NULL;
+    ALTER TABLE "announcements_announcement" ADD COLUMN "publish_end" timestamp with time zone;
+    ### New Model: announcements.Dismissal
+    CREATE TABLE "announcements_dismissal" (
+        "id" serial NOT NULL PRIMARY KEY,
+        "user_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED,
+        "announcement_id" integer NOT NULL REFERENCES "announcements_announcement" ("id") DEFERRABLE INITIALLY DEFERRED,
+        "dismissed_at" timestamp with time zone NOT NULL
+    )
+    ;
+    CREATE INDEX "announcements_dismissal_user_id" ON "announcements_dismissal" ("user_id");
+    CREATE INDEX "announcements_dismissal_announcement_id" ON "announcements_dismissal" ("announcement_id");
+
+### 0.1
+
+* initial release
+
+
+## About Pinax
+
+Pinax is an open-source platform built on the Django Web Framework. It is an ecosystem of reusable Django apps, themes, and starter project templates. This collection can be found at http://pinaxproject.com.
+
+The Pinax documentation is available at http://pinaxproject.com/pinax/. If you would like to help us improve our documentation or write more documentation, please join our Pinax Project Slack team and let us know!
 
 For updates and news regarding the Pinax Project, please follow us on Twitter at @pinaxproject and check out our blog http://blog.pinaxproject.com.
