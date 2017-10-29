@@ -120,7 +120,7 @@ then show a link to a detail view:
 
     <a href="{{ announcement.get_absolute_url }}">Read more...</a>
 
-See [Template tags](./templatetags.md) for detail on pinax-announcements template tags.
+See [Template Tags](#template-tags) for detail on pinax-announcements template tags.
 
 ### Dismissing Announcements
 
@@ -138,7 +138,7 @@ Add this markup to show a "Dismiss" link if available:
 The anchor markup shown above and the announcement dismissal view both conform
 to an `AJAX` response that [eldarion-ajax](https://github.com/eldarion/eldarion-ajax) understands.
 Furthermore, the templates that ship with this project will work
-seemlessly with `eldarion-ajax`. All you have to do is include the
+seemlessly with `eldarion-ajax`. Include the
 eldarion-ajax.min.js Javascript package in your base template:
 
     {% load staticfiles %}
