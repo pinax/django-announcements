@@ -1,9 +1,10 @@
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+
+from .compat import reverse
 
 
 @python_2_unicode_compatible
@@ -23,7 +24,11 @@ class Announcement(models.Model):
 
     title = models.CharField(_("title"), max_length=50)
     content = models.TextField(_("content"))
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("creator"))
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_("creator"),
+        on_delete=models.CASCADE
+    )
     creation_date = models.DateTimeField(_("creation_date"), default=timezone.now)
     site_wide = models.BooleanField(_("site wide"), default=False)
     members_only = models.BooleanField(_("members only"), default=False)
@@ -47,6 +52,14 @@ class Announcement(models.Model):
 
 
 class Dismissal(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="announcement_dismissals")
-    announcement = models.ForeignKey(Announcement, related_name="dismissals")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="announcement_dismissals",
+        on_delete=models.CASCADE
+    )
+    announcement = models.ForeignKey(
+        Announcement,
+        related_name="dismissals",
+        on_delete=models.CASCADE
+    )
     dismissed_at = models.DateTimeField(default=timezone.now)

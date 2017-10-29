@@ -1,13 +1,15 @@
 from django.conf.urls import url
 
 from .views import (
-    AnnouncementListView,
     AnnouncementCreateView,
+    AnnouncementDeleteView,
     AnnouncementDetailView,
     AnnouncementDismissView,
-    AnnouncementUpdateView,
-    AnnouncementDeleteView
+    AnnouncementListView,
+    AnnouncementUpdateView
 )
+
+app_name = "pinax_announcements"
 
 urlpatterns = [
     url(r"^$", AnnouncementListView.as_view(), name="announcement_list"),
