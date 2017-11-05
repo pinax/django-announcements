@@ -32,22 +32,22 @@ for any site wanting announcements for it's users.
 
 Announcements have title and content, with options for filtering their display:
 
-- ``site_wide`` - True or False
-- ``members_only`` - True or False
-- ``publish_start`` - date/time or none
-- ``publish_end`` - date/time or none
+* ``site_wide`` - True or False
+* ``members_only`` - True or False
+* ``publish_start`` - date/time or none
+* ``publish_end`` - date/time or none
 
 ``pinax-announcements`` has three options for dismissing an announcement:
 
-- ``DISMISSAL_NO`` - always visible
-- ``DISMISSAL_SESSION`` - dismiss for the session
-- ``DISMISSAL_PERMANENT`` - dismiss forever
+* ``DISMISSAL_NO`` - always visible
+* ``DISMISSAL_SESSION`` - dismiss for the session
+* ``DISMISSAL_PERMANENT`` - dismiss forever
 
 Supported Django and Python Versions
 ------------------------------------
 
-- Django 1.8, 1.10, 1.11, and 2.0
-- Python 2.7, 3.4, 3.5, and 3.6
+* Django 1.8, 1.10, 1.11, and 2.0
+* Python 2.7, 3.4, 3.5, and 3.6
 """
 
 setup(

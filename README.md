@@ -198,6 +198,7 @@ and which are not dismissed.
 * Drop Django 1.9 and Python 3.3 support
 * Move documentation into README
 * Convert CI and coverage to CircleCi and CodeCov
+* Add PyPi-compatible long description
 
 ### 2.0.4
 
