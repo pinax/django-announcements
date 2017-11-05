@@ -7,9 +7,9 @@
 
 [![CircleCi](https://img.shields.io/circleci/project/github/pinax/pinax-announcements.svg)](https://circleci.com/gh/pinax/pinax-announcements)
 [![Codecov](https://img.shields.io/codecov/c/github/pinax/pinax-announcements.svg)](https://codecov.io/gh/pinax/pinax-announcements)
-![](https://img.shields.io/github/contributors/pinax/pinax-announcements.svg)
-![](https://img.shields.io/github/issues-pr/pinax/pinax-announcements.svg)
-![](https://img.shields.io/github/issues-pr-closed/pinax/pinax-announcements.svg)
+[![](https://img.shields.io/github/contributors/pinax/pinax-announcements.svg)](https://github.com/pinax/pinax-announcements/graphs/contributors)
+[![](https://img.shields.io/github/issues-pr/pinax/pinax-announcements.svg)](https://github.com/pinax/pinax-announcements/pulls)
+[![](https://img.shields.io/github/issues-pr-closed/pinax/pinax-announcements.svg)](https://github.com/pinax/pinax-announcements/pulls?q=is%3Apr+is%3Aclosed)
 
 [![](http://slack.pinaxproject.com/badge.svg)](http://slack.pinaxproject.com/)
 
