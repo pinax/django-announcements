@@ -18,10 +18,9 @@ DEFAULT_SETTINGS = dict(
         "pinax.announcements",
         "pinax.announcements.tests"
     ],
-    MIDDLEWARE_CLASSES=[
+    MIDDLEWARE = [
         "django.contrib.sessions.middleware.SessionMiddleware",
         "django.contrib.auth.middleware.AuthenticationMiddleware",
-        "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
     ],
     DATABASES={
         "default": {

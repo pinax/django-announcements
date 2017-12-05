@@ -8,8 +8,4 @@ class AnnouncementPermissionsBackend(object):
 
     def has_perm(self, user, perm, obj=None):
         if perm == "announcements.can_manage":
-            if callable(getattr(user, "is_authenticated")):
-                # Django v1.8 compatibility
-                return user.is_authenticated() and user.is_staff
-            else:
-                return user.is_authenticated and user.is_staff
+            return user.is_authenticated and user.is_staff
