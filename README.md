@@ -17,8 +17,8 @@
 
 * [About Pinax](#about-pinax)
 * [Overview](#overview)
-  * [Supported Django and Python versions](#supported-django-and-python-versions)
   * [Features](#features)
+  * [Supported Django and Python versions](#supported-django-and-python-versions)
 * [Documentation](#documentation)
   * [Installation](#installation)
   * [Usage](#usage)
@@ -42,13 +42,6 @@ Django apps, themes, and starter project templates. This collection can be found
 `pinax-announcements` is a well tested, documented, and proven solution
 for any site wanting announcements for it's users.
 
-#### Supported Django and Python versions
-
-Django \ Python | 2.7 | 3.4 | 3.5 | 3.6
---------------- | --- | --- | --- | ---
-1.11 |  *  |  *  |  *  |  *  
-2.0  |     |  *  |  *  |  *
-
 #### Features
 
 Announcements have title and content, with options for filtering their display:
@@ -63,6 +56,13 @@ Announcements have title and content, with options for filtering their display:
 * `DISMISSAL_NO` - always visible
 * `DISMISSAL_SESSION` - dismiss for the session
 * `DISMISSAL_PERMANENT` - dismiss forever
+
+#### Supported Django and Python versions
+
+Django \ Python | 2.7 | 3.4 | 3.5 | 3.6
+--------------- | --- | --- | --- | ---
+1.11 |  *  |  *  |  *  |  *  
+2.0  |     |  *  |  *  |  *
 
 ## Documentation
 
