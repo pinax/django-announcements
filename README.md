@@ -44,12 +44,10 @@ for any site wanting announcements for it's users.
 
 #### Supported Django and Python versions
 
-Python \ Django | 1.11 | 2.0
---------------- | ---- | ---
-2.7 |  *  | 
-3.4 |  *  |  *
-3.5 |  *  |  *
-3.6 |  *  |  *
+Django \ Python | 2.7 | 3.4 | 3.5 | 3.6
+--------------- | --- | --- | --- | ---
+1.11 |  *  |  *  |  *  |  *  
+2.0  |     |  *  |  *  |  *
 
 #### Features
 
