@@ -21,7 +21,6 @@
   * [Features](#features)
 * [Documentation](#documentation)
   * [Installation](#installation)
-  * [Getting Started](#getting-started)
   * [Usage](#usage)
   * [Signals](#signals)
   * [Template Tags](#template-tags)
@@ -317,6 +316,7 @@ In case of any questions we recommend you join our Pinax Slack team (http://slac
 and ping us there instead of creating an issue on GitHub. Creating issues on GitHub is of course
 also valid but we are usually able to help you faster if you ping us in Slack.
 
+We also highly recommend reading our Open Source and Self-Care blog post (http://blog.pinaxproject.com/2016/01/19/open-source-and-self-care/).
 
 ## Code of Conduct
 
