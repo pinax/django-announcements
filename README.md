@@ -13,8 +13,46 @@
 
 [![](http://slack.pinaxproject.com/badge.svg)](http://slack.pinaxproject.com/)
 
+## Table of Contents
+
+* [About Pinax](#about-pinax)
+* [Overview](#overview)
+  * [Supported Django and Python versions](#supported-django-and-python-versions)
+  * [Features](#features)
+* [Documentation](#documentation)
+  * [Installation](#installation)
+  * [Getting Started](#getting-started)
+  * [Usage](#usage)
+  * [Signals](#signals)
+  * [Template Tags](#template-tags)
+* [Change Log](#change-log)
+* [Contribute](#contribute)
+* [Code of Conduct](#code-of-conduct)
+* [Connect with Pinax](#connect-with-pinax)
+* [License](#license)
+
+## About Pinax
+
+Pinax is an open-source platform built on the Django Web Framework. It is an ecosystem of reusable
+Django apps, themes, and starter project templates. This collection can be found at http://pinaxproject.com.
+
+## pinax-announcements
+
+### Overview
+
 `pinax-announcements` is a well tested, documented, and proven solution
 for any site wanting announcements for it's users.
+
+#### Supported Django and Python versions
+
+Python\Django | 1.8 | 1.11 | 2.0
+------------- | --- | ---- | ---
+2.7 | * | * |   |
+3.4 | * | * | * |
+3.5 | * | * | * |
+3.6 |   | * | * |
+
+#### Features
 
 Announcements have title and content, with options for filtering their display:
 
@@ -28,21 +66,10 @@ Announcements have title and content, with options for filtering their display:
 * `DISMISSAL_NO` - always visible
 * `DISMISSAL_SESSION` - dismiss for the session
 * `DISMISSAL_PERMANENT` - dismiss forever
-### Supported Django and Python Versions
 
-* Django 1.8, 1.10, 1.11, and 2.0
-* Python 2.7, 3.4, 3.5, and 3.6
+## Documentation
 
-## Table of Contents
-
-* [Installation](#installation)
-* [Usage](#usage)
-* [Signals](#signals)
-* [Template Tags](#template-tags)
-* [Change Log](#change-log)
-* [About Pinax](#about-pinax)
-
-## Installation
+### Installation
 
 To install pinax-announcements:
 
@@ -75,24 +102,24 @@ Lastly add `pinax.announcements.urls` to your project urlpatterns:
         ...
     ]
 
-## Usage
+### Usage
 
-### Templates
+#### Templates
 
 You have two options for `pinax-announcements` templates:
 
-#### 1. Use pre-built Bootstrap-based templates
+##### 1. Use pre-built Bootstrap-based templates
 
 This is the simplest method. `pinax-announcements` templates are found in the Pinax `pinax-theme-bootstrap` [theme project](https://github.com/pinax/pinax-theme-bootstrap). These templates work with the Bootstrap front-end framework as well as the Font Awesome icon library. If you [include](https://github.com/pinax/pinax-theme-bootstrap#getting-started) `pinax-theme-bootstrap` in your project these templates and icons are found and used automatically.
 
-#### 2. Create new templates
+##### 2. Create new templates
 
 Just a bit more effort—copy `pinax-theme-bootstrap` [templates](https://github.com/pinax/pinax-theme-bootstrap/tree/master/pinax_theme_bootstrap/templates/pinax/announcements) into your project and modify as needed.
 
 For instance, if your project doesn't use Bootstrap, remove Bootstrap and Font Awesome class names from your templates copies. Remove class references like `class="btn btn-success"` and `class="icon icon-pencil"` as well as removing `bootstrap` from the `{% load i18n bootstrap %}` statement. Since `bootstrap` template tags and filters are no longer loaded, you'll also need to update `{{ form|bootstrap }}` to `{{ form }}` since the "bootstrap" filter is no longer available.
 
 
-### Displaying Announcements
+#### Displaying Announcements
 
 First load the template tags:
 
@@ -122,7 +149,7 @@ then show a link to a detail view:
 
 See [Template Tags](#template-tags) for detail on pinax-announcements template tags.
 
-### Dismissing Announcements
+#### Dismissing Announcements
 
 Add this markup to show a "Dismiss" link if available:
 
@@ -133,7 +160,7 @@ Add this markup to show a "Dismiss" link if available:
         </form>
     {% endif %}
 
-#### Dismissal with Eldarion AJAX
+##### Dismissal with Eldarion AJAX
 
 The anchor markup shown above and the announcement dismissal view both conform
 to an `AJAX` response that [eldarion-ajax](https://github.com/eldarion/eldarion-ajax) understands.
@@ -153,29 +180,29 @@ the view also returns data in addition to rendered HTML. Furthermore, if
 you don't want `ajax` at all the view will handle a regular `POST` and
 perform a redirect.
 
-## Signals
+### Signals
 
-### pinax.announcements.signals.announcement_created
+#### pinax.announcements.signals.announcement_created
 
 This signal is sent immediately after an announcement is created.
 It provides a single `kwarg` of `announcement`, the created `Announcement` instance.
 Sender is the newly created Announcement instance.
 
-### pinax.announcements.signals.announcement_updated
+#### pinax.announcements.signals.announcement_updated
 
 This signal is sent immediately after an announcement is updated.
 It provides a single `kwarg` of `announcement`, the updated `Announcement` instance.
 Sender is the newly updated Announcement instance.
 
-### pinax.announcements.signals.announcement_deleted
+#### pinax.announcements.signals.announcement_deleted
 
 This signal is sent immediately after an announcement is deleted.
 It provides a single `kwarg` of `announcement`, the deleted `Announcement` instance.
 Sender is `None`.
 
-## Template Tags
+### Template Tags
 
-### announcements
+#### announcements
 
 Filters announcements by `publish_start` and `publish_end` date range, including
 all with no `publish_end` value.
@@ -191,6 +218,10 @@ and which are not dismissed.
     {% endfor %}
 
 ## Change Log
+
+### 2.1.1
+
+* Standardize documentation layout
 
 ### 2.1
 
@@ -275,10 +306,50 @@ Migration scripts to move prior installations to latest version::
 * initial release
 
 
-## About Pinax
+## Contribute
 
-Pinax is an open-source platform built on the Django Web Framework. It is an ecosystem of reusable Django apps, themes, and starter project templates. This collection can be found at http://pinaxproject.com.
+See this blog post http://blog.pinaxproject.com/2016/02/26/recap-february-pinax-hangout/ including a video,
+or our How to Contribute (http://pinaxproject.com/pinax/how_to_contribute/) section for an overview on how
+contributing to Pinax works. For concrete contribution ideas, please see our Ways to Contribute/What
+We Need Help With (http://pinaxproject.com/pinax/ways_to_contribute/) section.
 
-The Pinax documentation is available at http://pinaxproject.com/pinax/. If you would like to help us improve our documentation or write more documentation, please join our Pinax Project Slack team and let us know!
+In case of any questions we recommend you join our Pinax Slack team (http://slack.pinaxproject.com)
+and ping us there instead of creating an issue on GitHub. Creating issues on GitHub is of course
+also valid but we are usually able to help you faster if you ping us in Slack.
+
+
+## Code of Conduct
+
+In order to foster a kind, inclusive, and harassment-free community, the Pinax Project
+has a code of conduct, which can be found here  http://pinaxproject.com/pinax/code_of_conduct/.
+We ask you to treat everyone as a smart human programmer that shares an interest in Python, Django, and Pinax with you.
+
+
+## Connect with Pinax
 
 For updates and news regarding the Pinax Project, please follow us on Twitter at @pinaxproject and check out our blog http://blog.pinaxproject.com.
+
+
+## License
+
+```
+# Copyright (c) 2012-{{ year }} James Tauber and contributors
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+```
