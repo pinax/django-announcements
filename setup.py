@@ -46,8 +46,17 @@ Announcements have title and content, with options for filtering their display:
 Supported Django and Python Versions
 ------------------------------------
 
-* Django 1.8, 1.10, 1.11, and 2.0
-* Python 2.7, 3.4, 3.5, and 3.6
++---------------+------+------+------+
+| Django\Python |  1.8 | 1.11 |  2.0 |
++===============+======+======+======+
+| 2.7           |   *  |   *  |      |
++---------------+------+------+------+
+| 3.4           |   *  |   *  |  *   |
++---------------+------+------+------+
+| 3.5           |   *  |   *  |  *   |
++---------------+------+------+------+
+| 3.6           |      |   *  |  *   |
++---------------+------+------+------+
 """
 
 setup(
@@ -56,7 +65,7 @@ setup(
     description="a Django announcements app",
     name="pinax-announcements",
     long_description=LONG_DESCRIPTION,
-    version="2.1",
+    version="2.1.1",
     url="http://github.com/pinax/pinax-announcements/",
     license="MIT",
     packages=find_packages(),
@@ -68,7 +77,6 @@ setup(
         "Environment :: Web Environment",
         "Framework :: Django",
         'Framework :: Django :: 1.8',
-        'Framework :: Django :: 1.10',
         'Framework :: Django :: 1.11',
         'Framework :: Django :: 2.0',
         "Intended Audience :: Developers",
