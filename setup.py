@@ -1,5 +1,6 @@
 from setuptools import find_packages, setup
 
+VERSION = "2.1.1"
 LONG_DESCRIPTION = """
 .. image:: http://pinaxproject.com/pinax-design/patches/pinax-announcements.svg
     :target: https://pypi.python.org/pypi/pinax-announcements/
@@ -65,7 +66,7 @@ setup(
     description="a Django announcements app",
     name="pinax-announcements",
     long_description=LONG_DESCRIPTION,
-    version="2.1.1",
+    version=VERSION,
     url="http://github.com/pinax/pinax-announcements/",
     license="MIT",
     packages=find_packages(),
