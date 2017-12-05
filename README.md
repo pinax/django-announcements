@@ -46,10 +46,10 @@ for any site wanting announcements for it's users.
 
 Python \ Django | 1.11 | 2.0
 --------------- | ---- | ---
-            2.7 |  *   | 
-            3.4 |  *   |  *
-            3.5 |  *   |  *
-            3.6 |  *   |  *
+2.7 |  *  | 
+3.4 |  *  |  *
+3.5 |  *  |  *
+3.6 |  *  |  *
 
 #### Features
 
