@@ -44,8 +44,8 @@ for any site wanting announcements for it's users.
 
 #### Supported Django and Python versions
 
-Python\Django | 1.8 | 1.11 | 2.0
-------------- | --- | ---- | ---
+Python \ Django | 1.8 | 1.11 | 2.0
+--------------- | --- | ---- | ---
 2.7 | * | * |   |
 3.4 | * | * | * |
 3.5 | * | * | * |
@@ -333,7 +333,7 @@ For updates and news regarding the Pinax Project, please follow us on Twitter at
 ## License
 
 ```
-# Copyright (c) 2012-{{ year }} James Tauber and contributors
+# Copyright (c) 2012-2018 James Tauber and contributors
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
