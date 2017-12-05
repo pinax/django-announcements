@@ -2,11 +2,12 @@ from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.sessions.models import Session
 from django.test import RequestFactory
+from django.urls import reverse
 from django.utils import timezone
 
 from test_plus.test import TestCase
 
-from ..compat import mock, reverse
+from ..compat import mock
 from ..models import Announcement, Dismissal
 from ..templatetags.pinax_announcements_tags import \
     announcements as announcements_tag

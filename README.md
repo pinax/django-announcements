@@ -44,12 +44,12 @@ for any site wanting announcements for it's users.
 
 #### Supported Django and Python versions
 
-Python \ Django | 1.8 | 1.11 | 2.0
---------------- | --- | ---- | ---
-2.7 | * | * |   |
-3.4 | * | * | * |
-3.5 | * | * | * |
-3.6 |   | * | * |
+Python \ Django | 1.11 | 2.0
+--------------- | ---- | ---
+            2.7 |  *   | 
+            3.4 |  *   |  *
+            3.5 |  *   |  *
+            3.6 |  *   |  *
 
 #### Features
 
@@ -221,6 +221,7 @@ and which are not dismissed.
 ### 2.1.1
 
 * Standardize documentation layout
+* Drop Django v1.8, v1.10 support
 
 ### 2.1
 

@@ -8,4 +8,4 @@ class AnnouncementPermissionsBackend(object):
 
     def has_perm(self, user, perm, obj=None):
         if perm == "announcements.can_manage":
-            return user.is_authenticated() and user.is_staff
+            return user.is_authenticated and user.is_staff

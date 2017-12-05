@@ -46,17 +46,17 @@ Announcements have title and content, with options for filtering their display:
 Supported Django and Python Versions
 ------------------------------------
 
-+---------------+------+------+------+
-| Django\Python |  1.8 | 1.11 |  2.0 |
-+===============+======+======+======+
-| 2.7           |   *  |   *  |      |
-+---------------+------+------+------+
-| 3.4           |   *  |   *  |  *   |
-+---------------+------+------+------+
-| 3.5           |   *  |   *  |  *   |
-+---------------+------+------+------+
-| 3.6           |      |   *  |  *   |
-+---------------+------+------+------+
++---------------+------+------+
+| Django\Python | 1.11 |  2.0 |
++===============+======+======+
+| 2.7           |   *  |      |
++---------------+------+------+
+| 3.4           |   *  |  *   |
++---------------+------+------+
+| 3.5           |   *  |  *   |
++---------------+------+------+
+| 3.6           |   *  |  *   |
++---------------+------+------+
 """
 
 setup(
@@ -76,7 +76,6 @@ setup(
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
         "Framework :: Django",
-        'Framework :: Django :: 1.8',
         'Framework :: Django :: 1.11',
         'Framework :: Django :: 2.0',
         "Intended Audience :: Developers",
@@ -92,12 +91,12 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     install_requires=[
-        "django>=1.8",
+        "django>=1.11",
     ],
     tests_require=[
         "django-test-plus>=1.0.19",
         "pinax-theme-bootstrap>=7.7.0",
-        "mock",
+        "mock>=2.0.0",
     ],
     test_suite="runtests.runtests",
     zip_safe=False

@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, View
 from django.views.generic.detail import SingleObjectMixin
@@ -7,7 +8,6 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 from . import signals
-from .compat import reverse_lazy
 from .forms import AnnouncementForm
 from .models import Announcement
 
@@ -31,7 +31,7 @@ class AnnouncementDismissView(SingleObjectMixin, View):
             request.session["excluded_announcements"] = list(excluded)
             status = 200
         elif self.object.dismissal_type == Announcement.DISMISSAL_PERMANENT and \
-                request.user.is_authenticated():
+                request.user.is_authenticated:
             self.object.dismissals.create(user=request.user)
             status = 200
         else:

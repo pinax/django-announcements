@@ -30,7 +30,7 @@ class AnnouncementsNode(template.Node):
 
         exclusions = request.session.get("excluded_announcements", [])
         exclusions = set(exclusions)
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             for dismissal in request.user.announcement_dismissals.all():
                 exclusions.add(dismissal.announcement.pk)
         else:
