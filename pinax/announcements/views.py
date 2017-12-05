@@ -31,7 +31,7 @@ class AnnouncementDismissView(SingleObjectMixin, View):
             request.session["excluded_announcements"] = list(excluded)
             status = 200
         elif self.object.dismissal_type == Announcement.DISMISSAL_PERMANENT and \
-                request.user.is_authenticated():
+                request.user.is_authenticated:
             self.object.dismissals.create(user=request.user)
             status = 200
         else:
