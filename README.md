@@ -40,7 +40,7 @@ Django apps, themes, and starter project templates. This collection can be found
 ### Overview
 
 `pinax-announcements` is a well tested, documented, and proven solution
-for any site wanting announcements for it's users.
+for any site wanting announcements for its users.
 
 #### Features
 
