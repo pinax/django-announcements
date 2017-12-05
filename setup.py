@@ -96,6 +96,7 @@ setup(
     tests_require=[
         "django-test-plus>=1.0.19",
         "pinax-theme-bootstrap>=7.7.0",
+        "mock>=2.0.0",
     ],
     test_suite="runtests.runtests",
     zip_safe=False
