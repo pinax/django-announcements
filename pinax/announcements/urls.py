@@ -6,7 +6,7 @@ from .views import (
     AnnouncementDetailView,
     AnnouncementDismissView,
     AnnouncementListView,
-    AnnouncementUpdateView
+    AnnouncementUpdateView,
 )
 
 app_name = "pinax_announcements"

@@ -16,7 +16,7 @@ from ..views import (
     AnnouncementDeleteView,
     AnnouncementDetailView,
     AnnouncementListView,
-    AnnouncementUpdateView
+    AnnouncementUpdateView,
 )
 
 
