@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-VERSION = "2.1.1"
+VERSION = "2.1.2"
 LONG_DESCRIPTION = """
 .. image:: http://pinaxproject.com/pinax-design/patches/pinax-announcements.svg
     :target: https://pypi.python.org/pypi/pinax-announcements/

@@ -101,6 +101,7 @@ Lastly add `pinax.announcements.urls` to your project urlpatterns:
 
 ### Usage
 
+
 #### Templates
 
 You have two options for `pinax-announcements` templates:
@@ -215,6 +216,10 @@ and which are not dismissed.
     {% endfor %}
 
 ## Change Log
+
+### 2.1.2
+
+* Remove doc build
 
 ### 2.1.1
 
