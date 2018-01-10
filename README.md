@@ -217,6 +217,10 @@ and which are not dismissed.
 
 ## Change Log
 
+### 3.0.0
+
+* Bump major version after completing Django 2.0 upgrade, removing <=1.10 support
+
 ### 2.1.2
 
 * Remove doc build
