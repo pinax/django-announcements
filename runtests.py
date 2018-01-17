@@ -13,10 +13,10 @@ DEFAULT_SETTINGS = dict(
         "django.contrib.contenttypes",
         "django.contrib.sites",
         "django.contrib.sessions",
-        "pinax_theme_bootstrap",
         "bootstrapform",
         "pinax.announcements",
-        "pinax.announcements.tests"
+        "pinax.announcements.tests",
+        "pinax.templates",
     ],
     MIDDLEWARE = [
         "django.contrib.sessions.middleware.SessionMiddleware",
@@ -42,7 +42,6 @@ DEFAULT_SETTINGS = dict(
             "OPTIONS": {
                 "context_processors": [
                     "django.contrib.auth.context_processors.auth",
-                    "pinax_theme_bootstrap.context_processors.theme",
                 ]
             }
         },
