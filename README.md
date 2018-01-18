@@ -75,7 +75,7 @@ Django \ Python | 2.7 | 3.4 | 3.5 | 3.6
 To install pinax-announcements:
 
 ```shell
-$ pip install pinax-announcements
+    $ pip install pinax-announcements
 ```
 
 Add `pinax.announcements` to your `INSTALLED_APPS` setting:
