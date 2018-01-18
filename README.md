@@ -74,34 +74,42 @@ Django \ Python | 2.7 | 3.4 | 3.5 | 3.6
 
 To install pinax-announcements:
 
+```shell
     pip install pinax-announcements
+```
 
 Add `pinax.announcements` to your `INSTALLED_APPS` setting:
 
+```python
     INSTALLED_APPS = (
         ...
         "pinax.announcements",
         ...
     )
+```
 
 Optionally, if you want someone other than staff to manage announcements,
 enable this authentication backend:
 
+```python
     AUTHENTICATION_BACKENDS = [
         ...
         "pinax.announcements.auth_backends.AnnouncementPermissionsBackend",
         ...
     ]
+```
 
 then enable permission `"announcements.can_manage"` for these managers.
 
 Lastly add `pinax.announcements.urls` to your project urlpatterns:
 
+```django
     urlpatterns = [
         ...
         url(r"^announcements/", include("pinax.announcements.urls", namespace="pinax_announcements")),
         ...
     ]
+```
 
 ### Usage
 
@@ -123,10 +131,13 @@ For instance, if your project doesn't use Bootstrap, remove Bootstrap and Font A
 
 First load the template tags:
 
+```django
     {% load pinax_announcements_tags %}
+```
 
 Then fetch announcements with the `announcements` template tag:
 
+```django
     <h3>Announcements</h3>
 
     {% announcements as announcement_list %}
@@ -141,11 +152,14 @@ Then fetch announcements with the `announcements` template tag:
             {% endfor %}
         </div>
     {% endif %}
+```
 
 If your announcement content is too large for viewing inline
 then show a link to a detail view:
 
+```django
     <a href="{{ announcement.get_absolute_url }}">Read more...</a>
+```
 
 See [Template Tags](#template-tags) for detail on pinax-announcements template tags.
 
@@ -153,12 +167,14 @@ See [Template Tags](#template-tags) for detail on pinax-announcements template t
 
 Add this markup to show a "Dismiss" link if available:
 
+```django
     {% if announcement.dismiss_url %}
         <form class="form ajax" data-replace-closest=".announcement" action="{{ announcement.dismiss_url }}" method="post">
             {% csrf_token %}
             <button class="btn btn-default">Clear</button>
         </form>
     {% endif %}
+```
 
 ##### Dismissal with Eldarion AJAX
 
@@ -168,12 +184,16 @@ Furthermore, the templates that ship with this project will work
 seemlessly with `eldarion-ajax`. Include the
 eldarion-ajax.min.js Javascript package in your base template:
 
+```django
     {% load staticfiles %}
     <script src="{% static "js/eldarion-ajax.min.js" %}"></script>
+```
 
 and include `eldarion-ajax` in your site JavaScript:
 
+```javascript
     require('eldarion-ajax');
+```
 
 This of course is optional. You can roll your own JavaScript handling as
 the view also returns data in addition to rendered HTML. Furthermore, if
@@ -209,6 +229,7 @@ all with no `publish_end` value.
 Returns announcements matching `site_wide == True` and `members_only == False`,
 and which are not dismissed.
 
+```django
     {% announcements as announcement_list %}
     {% for announcement in announcement_list %}
         <div>
@@ -216,7 +237,7 @@ and which are not dismissed.
             {{ announcement.content }}
         </div>
     {% endfor %}
-
+```
 
 ## Change Log
 
