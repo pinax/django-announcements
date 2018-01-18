@@ -75,7 +75,7 @@ Django \ Python | 2.7 | 3.4 | 3.5 | 3.6
 To install pinax-announcements:
 
 ```shell
-    pip install pinax-announcements
+$ pip install pinax-announcements
 ```
 
 Add `pinax.announcements` to your `INSTALLED_APPS` setting:
@@ -103,7 +103,7 @@ then enable permission `"announcements.can_manage"` for these managers.
 
 Lastly add `pinax.announcements.urls` to your project urlpatterns:
 
-```django
+```python
     urlpatterns = [
         ...
         url(r"^announcements/", include("pinax.announcements.urls", namespace="pinax_announcements")),
