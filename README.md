@@ -25,6 +25,7 @@
   * [Usage](#usage)
   * [Signals](#signals)
   * [Template Tags](#template-tags)
+  * [Templates](#templates)
 * [Change Log](#change-log)
 * [Contribute](#contribute)
 * [Code of Conduct](#code-of-conduct)
@@ -81,11 +82,10 @@ To install pinax-announcements:
 Add `pinax.announcements` to your `INSTALLED_APPS` setting:
 
 ```python
-    INSTALLED_APPS = (
-        ...
+    INSTALLED_APPS = [
+        # other apps
         "pinax.announcements",
-        ...
-    )
+    ]
 ```
 
 Optionally, if you want someone other than staff to manage announcements,
@@ -93,9 +93,8 @@ enable this authentication backend:
 
 ```python
     AUTHENTICATION_BACKENDS = [
-        ...
+        # other backends
         "pinax.announcements.auth_backends.AnnouncementPermissionsBackend",
-        ...
     ]
 ```
 
@@ -105,27 +104,12 @@ Lastly add `pinax.announcements.urls` to your project urlpatterns:
 
 ```python
     urlpatterns = [
-        ...
+        # other urls
         url(r"^announcements/", include("pinax.announcements.urls", namespace="pinax_announcements")),
-        ...
     ]
 ```
 
 ### Usage
-
-#### Templates
-
-You have two options for `pinax-announcements` templates:
-
-##### 1. Use pre-built Bootstrap-based templates
-
-This is the simplest method. `pinax-announcements` templates are found in the Pinax `pinax-theme-bootstrap` [theme project](https://github.com/pinax/pinax-theme-bootstrap). These templates work with the Bootstrap front-end framework as well as the Font Awesome icon library. If you [include](https://github.com/pinax/pinax-theme-bootstrap#getting-started) `pinax-theme-bootstrap` in your project these templates and icons are found and used automatically.
-
-##### 2. Create new templates
-
-Just a bit more effort—copy `pinax-theme-bootstrap` [templates](https://github.com/pinax/pinax-theme-bootstrap/tree/master/pinax_theme_bootstrap/templates/pinax/announcements) into your project and modify as needed.
-
-For instance, if your project doesn't use Bootstrap, remove Bootstrap and Font Awesome class names from your templates copies. Remove class references like `class="btn btn-success"` and `class="icon icon-pencil"` as well as removing `bootstrap` from the `{% load i18n bootstrap %}` statement. Since `bootstrap` template tags and filters are no longer loaded, you'll also need to update `{{ form|bootstrap }}` to `{{ form }}` since the "bootstrap" filter is no longer available.
 
 #### Displaying Announcements
 
@@ -238,6 +222,40 @@ and which are not dismissed.
         </div>
     {% endfor %}
 ```
+
+
+### Templates
+
+Default templates are provided by the `pinax-templates` app in the
+[announcements](https://github.com/pinax/pinax-templates/tree/master/pinax/templates/templates/pinax/announcements)
+section of that project.
+
+Reference pinax-templates
+[installation instructions](https://github.com/pinax/pinax-templates/blob/master/README.md#installation)
+to include these templates in your project.
+
+#### Customizing Templates
+
+Override the default `pinax-templates` templates by copying them into your project
+subdirectory `pinax/announcements/` on the template path and modifying as needed.
+
+For example if your project doesn't use Bootstrap, copy the desired templates
+then remove Bootstrap and Font Awesome class names from your copies.
+Remove class references like `class="btn btn-success"` and `class="icon icon-pencil"` as well as
+`bootstrap` from the `{% load i18n bootstrap %}` statement.
+Since `bootstrap` template tags and filters are no longer loaded, you'll also need to update
+`{{ form|bootstrap }}` to `{{ form }}` since the "bootstrap" filter is no longer available.
+
+#### `announcement_confirm_delete.html`
+
+#### `announcement_detail.html`
+
+#### `announcement_form.html`
+
+#### `announcement_list.html`
+
+#### `base.html`
+
 
 ## Change Log
 
