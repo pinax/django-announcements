@@ -259,6 +259,10 @@ Since `bootstrap` template tags and filters are no longer loaded, you'll also ne
 
 ## Change Log
 
+### 3.0.2
+
+* Update pinax-templates version requirement
+
 ### 3.0.1
 
 * Replace pinax-theme-bootstrap test dependency with pinax-templates

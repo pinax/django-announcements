@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-VERSION = "3.0.1"
+VERSION = "3.0.2"
 LONG_DESCRIPTION = """
 .. image:: http://pinaxproject.com/pinax-design/patches/pinax-announcements.svg
     :target: https://pypi.python.org/pypi/pinax-announcements/
@@ -98,7 +98,7 @@ setup(
     ],
     tests_require=[
         "django-test-plus>=1.0.22",
-        "pinax-templates>=1.0.0",
+        "pinax-templates>=1.0.4",
         "mock>=2.0.0",
     ],
     test_suite="runtests.runtests",
