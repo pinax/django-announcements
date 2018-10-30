@@ -223,7 +223,6 @@ and which are not dismissed.
     {% endfor %}
 ```
 
-
 ### Templates
 
 Default templates are provided by the `pinax-templates` app in the
