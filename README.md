@@ -126,7 +126,7 @@ Then fetch announcements with the `announcements` template tag:
 
     {% announcements as announcement_list %}
 
-    {% if announcements_list %}
+    {% if announcement_list %}
         <div class="announcements">
             {% for announcement in announcement_list %}
                 <div class="announcement">
