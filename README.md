@@ -100,7 +100,7 @@ enable this authentication backend:
 
 then enable permission `"announcements.can_manage"` for these managers.
 
-Lastly add `pinax.announcements.urls` to your project urlpatterns:
+Add `pinax.announcements.urls` to your project urlpatterns:
 
 ```python
     urlpatterns = [
