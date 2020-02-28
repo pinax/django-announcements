@@ -1,4 +1,4 @@
-class AnnouncementPermissionsBackend(object):
+class AnnouncementPermissionsBackend:
     supports_object_permissions = True
     supports_anonymous_user = True
 
