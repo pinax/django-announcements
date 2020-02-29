@@ -24,7 +24,7 @@ from ..views import (
 class TestModels(TestCase):
 
     def setUp(self):
-        super(TestModels, self).setUp()
+        super().setUp()
 
         self.user = self.make_user("pinax")
         self.title = "Big Announcement"
@@ -55,7 +55,7 @@ class TestModels(TestCase):
 class TestViews(TestCase):
 
     def setUp(self):
-        super(TestViews, self).setUp()
+        super().setUp()
 
         # Create a non-permissioned user.
         # This user cannot create, update, or delete announcements.

@@ -46,7 +46,7 @@ class AnnouncementDismissView(SingleObjectMixin, View):
 class ProtectedView(View):
     @method_decorator(permission_required("announcements.can_manage"))
     def dispatch(self, *args, **kwargs):
-        return super(ProtectedView, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
 class AnnouncementCreateView(ProtectedView, CreateView):
@@ -74,7 +74,7 @@ class AnnouncementUpdateView(ProtectedView, UpdateView):
     success_url = reverse_lazy("pinax_announcements:announcement_list")
 
     def form_valid(self, form):
-        response = super(AnnouncementUpdateView, self).form_valid(form)
+        response = super().form_valid(form)
         signals.announcement_updated.send(
             sender=self.object,
             announcement=self.object,
@@ -89,7 +89,7 @@ class AnnouncementDeleteView(ProtectedView, DeleteView):
     success_url = reverse_lazy("pinax_announcements:announcement_list")
 
     def delete(self, request, *args, **kwargs):
-        response = super(AnnouncementDeleteView, self).delete(request, *args, **kwargs)
+        response = super().delete(request, *args, **kwargs)
 #        hookset.announcement_deleted_message(self.request, self.object)
         signals.announcement_deleted.send(
             sender=None,
