@@ -24,6 +24,10 @@ var/
 *.eggs
 .python-version
 
+# Pipfile
+Pipfile
+Pipfile.lock
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
