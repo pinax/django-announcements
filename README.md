@@ -63,7 +63,7 @@ Announcements have title and content, with options for filtering their display:
 
 #### Supported Django and Python versions
 
-Django \ Python | 3.6 | 3.7 | 3.8
+Django / Python | 3.6 | 3.7 | 3.8
 --------------- | --- | --- | ---
 1.11 |  *  |  *  |     
 2.2  |  *  |  *  |  *   
@@ -261,6 +261,8 @@ Since `bootstrap` template tags and filters are no longer loaded, you'll also ne
 
 ## Change Log
 
+### 4.0.0
+
 ### 3.0.2
 
 * Update pinax-templates version requirement
@@ -392,4 +394,4 @@ and check out our [Pinax Project blog](http://blog.pinaxproject.com).
 
 ## License
 
-Copyright (c) 2012-2019 James Tauber and contributors under the [MIT license](https://opensource.org/licenses/MIT).
+Copyright (c) 2012-present James Tauber and contributors under the [MIT license](https://opensource.org/licenses/MIT).
