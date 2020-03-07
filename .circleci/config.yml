@@ -38,12 +38,6 @@ jobs:
         environment:
           - TOXENV=checkqa
           - UPLOAD_COVERAGE=0
-  py36dj111:
-    <<: *common
-    docker:
-      - image: circleci/python:3.6
-        environment:
-          TOXENV=py36-dj111
   py36dj22:
     <<: *common
     docker:
@@ -56,12 +50,6 @@ jobs:
       - image: circleci/python:3.6
         environment:
           TOXENV=py36-dj30
-  py37dj111:
-    <<: *common
-    docker:
-      - image: circleci/python:3.7
-        environment:
-          TOXENV=py37-dj111
   py37dj22:
     <<: *common
     docker:
@@ -92,10 +80,8 @@ workflows:
   test:
     jobs:
       - lint
-      - py36dj111
       - py36dj22
       - py36dj30
-      - py37dj111
       - py37dj22
       - py37dj30
       - py38dj22
