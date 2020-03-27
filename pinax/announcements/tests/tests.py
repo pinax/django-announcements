@@ -85,7 +85,7 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
             response.url,
-            "{}?next={}".format(self.login_redirect, next)
+            f"{self.login_redirect}?next={next}"
         )
 
     def get_session_data(self):
