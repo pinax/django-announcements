@@ -73,7 +73,7 @@ Announcements have title and content, with options for filtering their display:
 * `DISMISSAL_SESSION` - dismiss for the session
 * `DISMISSAL_PERMANENT` - dismiss forever
 
-#### Supported Django and Python versions
+#### Supported Django and Python Versions
 
 Django / Python | 3.6 | 3.7 | 3.8
 --------------- | --- | --- | ---  
