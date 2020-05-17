@@ -446,13 +446,13 @@ class TestTags(TestCase):
         context = dict(request=request)
 
         node.render(context)
-        self.assertSetEqual(set(context["announcements_list"]), set([self.first, self.second]))
+        self.assertSetEqual(set(context["announcements_list"]), {self.first, self.second})
 
         # dismiss one announcement
         self.second.dismissals.create(user=self.user)
 
         node.render(context)
-        self.assertSetEqual(set(context["announcements_list"]), set([self.first]))
+        self.assertSetEqual(set(context["announcements_list"]), {self.first})
 
     @mock.patch("django.template.Variable")
     def test_anonymous_announcements(self, Variable):
@@ -474,4 +474,4 @@ class TestTags(TestCase):
         context = dict(request=request)
 
         node.render(context)
-        self.assertSetEqual(set(context["announcements_list"]), set([self.first, self.second]))
+        self.assertSetEqual(set(context["announcements_list"]), {self.first, self.second})
