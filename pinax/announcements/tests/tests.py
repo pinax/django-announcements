@@ -1,3 +1,5 @@
+from unittest import mock
+
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.sessions.models import Session
@@ -7,7 +9,6 @@ from django.utils import timezone
 
 from test_plus.test import TestCase
 
-from ..compat import mock
 from ..models import Announcement, Dismissal
 from ..templatetags.pinax_announcements_tags import \
     announcements as announcements_tag
@@ -23,7 +24,7 @@ from ..views import (
 class TestModels(TestCase):
 
     def setUp(self):
-        super(TestModels, self).setUp()
+        super().setUp()
 
         self.user = self.make_user("pinax")
         self.title = "Big Announcement"
@@ -54,7 +55,7 @@ class TestModels(TestCase):
 class TestViews(TestCase):
 
     def setUp(self):
-        super(TestViews, self).setUp()
+        super().setUp()
 
         # Create a non-permissioned user.
         # This user cannot create, update, or delete announcements.
@@ -84,7 +85,7 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
             response.url,
-            "{}?next={}".format(self.login_redirect, next)
+            f"{self.login_redirect}?next={next}"
         )
 
     def get_session_data(self):
@@ -445,13 +446,13 @@ class TestTags(TestCase):
         context = dict(request=request)
 
         node.render(context)
-        self.assertSetEqual(set(context["announcements_list"]), set([self.first, self.second]))
+        self.assertSetEqual(set(context["announcements_list"]), {self.first, self.second})
 
         # dismiss one announcement
         self.second.dismissals.create(user=self.user)
 
         node.render(context)
-        self.assertSetEqual(set(context["announcements_list"]), set([self.first]))
+        self.assertSetEqual(set(context["announcements_list"]), {self.first})
 
     @mock.patch("django.template.Variable")
     def test_anonymous_announcements(self, Variable):
@@ -473,4 +474,4 @@ class TestTags(TestCase):
         context = dict(request=request)
 
         node.render(context)
-        self.assertSetEqual(set(context["announcements_list"]), set([self.first, self.second]))
+        self.assertSetEqual(set(context["announcements_list"]), {self.first, self.second})

@@ -28,7 +28,7 @@ class DismissalAdmin(admin.ModelAdmin):
     def get_search_fields(self, request):
         User = get_user_model()
         if hasattr(User, "USERNAME_FIELD"):
-            username_search = "user__%s" % User.USERNAME_FIELD
+            username_search = f"user__{User.USERNAME_FIELD}"
         else:
             username_search = "user__username"
         return (username_search, "announcement__title")
