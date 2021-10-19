@@ -45,7 +45,8 @@ DEFAULT_SETTINGS = dict(
                 ]
             }
         },
-    ]
+    ],
+    DEFAULT_AUTO_FIELD="django.db.models.BigAutoField",
 )
 
 
