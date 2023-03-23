@@ -31,8 +31,7 @@ class AnnouncementsNode(template.Node):
         exclusions = request.session.get("excluded_announcements", [])
         exclusions = set(exclusions)
         if request.user.is_authenticated:
-            for dismissal in request.user.announcement_dismissals.all():
-                exclusions.add(dismissal.announcement.pk)
+            qs = qs.exclude(dismissals__user=request.user)
         else:
             qs = qs.exclude(members_only=True)
         context[self.as_var] = qs.exclude(pk__in=exclusions)
