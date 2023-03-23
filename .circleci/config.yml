@@ -62,6 +62,12 @@ jobs:
       - image: circleci/python:3.6
         environment:
           TOXENV=py36-dj32
+  py36dj40:
+    <<: *common
+    docker:
+      - image: circleci/python:3.6
+        environment:
+          TOXENV=py36-dj40
   py37dj22:
     <<: *common
     docker:
@@ -86,6 +92,12 @@ jobs:
       - image: circleci/python:3.7
         environment:
           TOXENV=py37-dj32
+  py37dj40:
+    <<: *common
+    docker:
+      - image: circleci/python:3.7
+        environment:
+          TOXENV=py37-dj40
   py38dj22:
     <<: *common
     docker:
@@ -110,6 +122,12 @@ jobs:
       - image: circleci/python:3.8
         environment:
           TOXENV=py38-dj32
+  py38dj40:
+    <<: *common
+    docker:
+      - image: circleci/python:3.8
+        environment:
+          TOXENV=py38-dj40
 
 workflows:
   version: 2
@@ -120,11 +138,14 @@ workflows:
       - py36dj30
       - py36dj31
       - py36dj32
+      - py36dj40
       - py37dj22
       - py37dj30
       - py37dj31
       - py37dj32
+      - py37dj40
       - py38dj22
       - py38dj30
       - py38dj31
       - py38dj32
+      - py38dj40
