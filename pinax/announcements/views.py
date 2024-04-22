@@ -37,7 +37,8 @@ class AnnouncementDismissView(SingleObjectMixin, View):
         else:
             status = 409
 
-        if request.is_ajax():
+        is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
+        if is_ajax:
             return JsonResponse({}, status=status)
         else:
             return HttpResponse(content=b"", status=status)
