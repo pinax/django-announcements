@@ -77,8 +77,9 @@ Announcements have title and content, with options for filtering their display:
 
 Django / Python | 3.6 | 3.7 | 3.8
 --------------- | --- | --- | ---  
-2.2  |  *  |  *  |  *   
-3.0  |  *  |  *  |  *  
+2.2             |  *  |  *  |  *   
+3.0             |  *  |  *  |  *  
+4.0             |  *  |  *  |  *  
 
 
 ## Documentation
@@ -271,6 +272,11 @@ Since `bootstrap` template tags and filters are no longer loaded, you'll also ne
 
 
 ## Change Log
+
+### 4.0.1
+
+* Support Django 4.0
+* Avoid extra queries when fetching dismissals #63
 
 ### 4.0.0
 

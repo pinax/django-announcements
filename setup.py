@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-VERSION = "4.0.0"
+VERSION = "4.0.1"
 LONG_DESCRIPTION = """
 .. image:: http://pinaxproject.com/pinax-design/patches/pinax-announcements.svg
     :target: https://pypi.python.org/pypi/pinax-announcements/
@@ -64,6 +64,8 @@ Supported Django and Python Versions
 +-----------------+-----+-----+-----+
 |  3.2            |  *  |  *  |  *  |
 +-----------------+-----+-----+-----+
+|  4.0            |  *  |  *  |  *  |
++-----------------+-----+-----+-----+
 """
 
 setup(
@@ -87,6 +89,7 @@ setup(
         "Framework :: Django :: 3.0",
         "Framework :: Django :: 3.1",
         "Framework :: Django :: 3.2",
+        "Framework :: Django :: 4.0",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
